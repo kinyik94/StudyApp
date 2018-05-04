@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="StudyApp.Views.NewExam"
+             Title="{Binding Title}">
+
+    <AbsoluteLayout>
+        <ScrollView AbsoluteLayout.LayoutBounds="0,0,1.,1." AbsoluteLayout.LayoutFlags="All">
+            <StackLayout>
+                <Label Text="Subject" Margin="10,10,10,0" />
+                <Picker x:Name="SubjectPickerNewExam"
+                ItemsSource="{Binding Subjects}"
+                ItemDisplayBinding="{Binding Name}" 
+                SelectedIndex="{Binding SelectedSubjectIndex, Mode=TwoWay}"
+                HorizontalOptions="FillAndExpand"
+                Margin="10,0,10,0" />
+
+                <Label Text="Date" Margin="10,20,10,0" />
+                <DatePicker Margin="10,0,10,0" HorizontalOptions="Start" Date="{Binding ExamDate}" />
+
+                <Label Text="Start Time" Margin="10,20,10,0" />
+                <TimePicker HorizontalOptions="Start"
+                            Margin="10,0,10,0"
+                            Time="{Binding ExamStartTime}"/>
+
+                <Label Text="Duration" Margin="10,20,10,0" />
+                <Entry HorizontalOptions="FillAndExpand"
+                       Keyboard="Numeric"
+                       Margin="10,0,10,0"
+                       Text="{Binding ExamDuration}"/>
+
+                <Label Text="Location" Margin="10,20,10,0" />
+                <Entry Placeholder="Class Location"
+                       HorizontalOptions="FillAndExpand"
+                       Margin="10,0,10,0"
+                       Text="{Binding ExamLocation}"/>
+
+            </StackLayout>
+        </ScrollView>
+        <Image Source="Images/icon_ok.png" AbsoluteLayout.LayoutBounds="1, 1, 100, 100" Margin="20"
+				AbsoluteLayout.LayoutFlags="PositionProportional">
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding FABCommand}" />
+            </Image.GestureRecognizers>
+        </Image>
+    </AbsoluteLayout>
+
+</ContentPage>

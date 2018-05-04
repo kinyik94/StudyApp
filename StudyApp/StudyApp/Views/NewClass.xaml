@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="StudyApp.Views.NewClass"
+             Title="{Binding Title}">
+
+    <AbsoluteLayout>
+        <ScrollView AbsoluteLayout.LayoutBounds="0,0,1.,1." AbsoluteLayout.LayoutFlags="All">
+            <StackLayout>
+                <Label Text="Subject" Margin="10,10,10,0" />
+                <Picker x:Name="SubjectPickerNewClass"
+                        ItemsSource="{Binding Subjects}"
+                        ItemDisplayBinding="{Binding Name}" 
+                        SelectedIndex="{Binding SelectedSubjectIndex, Mode=TwoWay}"
+                        HorizontalOptions="FillAndExpand"
+                        Margin="10,0,10,0" />
+
+                <Label Text="Day" Margin="10,20,10,0" />
+                <Picker Margin="10,0,10,0" 
+                        HorizontalOptions="FillAndExpand" 
+                        SelectedIndex="{Binding ClassDay, Mode=TwoWay}" >
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Monday</x:String>
+                            <x:String>Tuesday</x:String>
+                            <x:String>Wednesday</x:String>
+                            <x:String>Thursday</x:String>
+                            <x:String>Friday</x:String>
+                            <x:String>Saturday</x:String>
+                            <x:String>Sunday</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+
+                <Label Text="Start Time" Margin="10,20,10,0" />
+                <TimePicker HorizontalOptions="Start"
+                            Margin="10,0,10,0"
+                            Time="{Binding ClassStartTime}" />
+
+                <Label Text="Duration" Margin="10,20,10,0" />
+                <Entry HorizontalOptions="FillAndExpand"
+                       Keyboard="Numeric"
+                       Margin="10,0,10,0"
+                       Text="{Binding ClassDuration}"/>
+
+                <Label Text="Location" Margin="10,20,10,0" />
+                <Entry Placeholder="Class Location" HorizontalOptions="FillAndExpand"
+                       Text="{Binding ClassLocation}"
+                       Margin="10,0,10,0" />
+
+                <Grid HorizontalOptions="FillAndExpand">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0"  Text="Repeats" Margin="10,20,10,0" />
+                    <Switch Grid.Row="0" Grid.Column="1" IsToggled="{Binding ClassRepeats}" />
+                </Grid>
+
+                <Label Text="Week" Margin="10,20,10,0" />
+                <Picker Margin="10,0,10,0" 
+                        HorizontalOptions="FillAndExpand"
+                        SelectedIndex="{Binding ClassWeek, Mode=TwoWay}" >
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Week A</x:String>
+                            <x:String>Week B</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+
+                <Label Text="{Binding StartDateName}" Margin="10,20,10,0" />
+                <DatePicker Margin="10,0,10,0" HorizontalOptions="Start" Date="{Binding ClassStartDate}" />
+
+                <Label Text="End Date" Margin="10,20,10,0" IsVisible="{Binding ClassRepeats}" />
+                <DatePicker Margin="10,0,10,0" HorizontalOptions="Start" IsVisible="{Binding ClassRepeats}" Date="{Binding ClassEndDate}" />
+
+            </StackLayout>
+        </ScrollView>
+        <Image Source="Images/icon_ok.png" AbsoluteLayout.LayoutBounds="1, 1, 100, 100" Margin="20"
+				AbsoluteLayout.LayoutFlags="PositionProportional">
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding FABCommand}" />
+            </Image.GestureRecognizers>
+        </Image>
+    </AbsoluteLayout>
+
+</ContentPage>

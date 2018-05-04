@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="StudyApp.Views.Subjects"
+             Title="{Binding Title}">
+    <AbsoluteLayout>
+        <StackLayout AbsoluteLayout.LayoutBounds="0,0,1.,1." AbsoluteLayout.LayoutFlags="All">
+            <Grid HorizontalOptions="FillAndExpand"
+                  Margin="10, 10, 10, 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <Label Text="Semester" Grid.Column="0" Grid.Row="0" />
+                <Image Source="Images/icon_menu.png" Grid.Column="1" Grid.Row="0" HeightRequest="20" WidthRequest="20" >
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnSemesterMenuClicked" />
+                    </Label.GestureRecognizers>
+                </Image>
+            </Grid>
+            <Picker x:Name="SemesterPicker"
+              ItemsSource="{Binding Semesters}"
+              HorizontalOptions="FillAndExpand"
+              Margin="10, 0, 10, 0"
+              ItemDisplayBinding="{Binding Name}"
+                SelectedIndex="{Binding SelectedSemesterIndex, Mode=TwoWay}">
+                <Picker.Behaviors>
+                    <behaviors:EventHandlerBehavior EventName="SelectedIndexChanged">
+                        <behaviors:InvokeCommandAction Command="{Binding SemesterChangedCommand}" />
+                    </behaviors:EventHandlerBehavior>
+                </Picker.Behaviors>
+            </Picker>
+            
+            <ListView x:Name="SubjectList"
+                      ItemTapped="OnSubjectTapped"
+                      ItemsSource="{Binding Subjects}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Label Font="Large" Text="{Binding Name}" />
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+        <Image Source="Images/icon_plus.png" AbsoluteLayout.LayoutBounds="1, 1, 100, 100" Margin="20"
+				AbsoluteLayout.LayoutFlags="PositionProportional">
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding FABCommand}" />
+            </Image.GestureRecognizers>
+        </Image>
+    </AbsoluteLayout>
+
+</ContentPage>

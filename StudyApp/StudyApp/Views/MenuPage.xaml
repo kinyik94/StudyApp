@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                  xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+                  prism:ViewModelLocator.AutowireViewModel="True"
+                  x:Class="StudyApp.Views.MenuPage"
+                  Title="{Binding Title}">
+
+    <MasterDetailPage.Master>
+        <ContentPage Title="Menu">
+            <StackLayout Padding="20">
+                <Grid>
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateCommand}" CommandParameter="Navigation/Dashboard"/>
+                    </Grid.GestureRecognizers>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Image Source="Images/icon_dashboard.png" Grid.Column="0" Grid.Row="0" WidthRequest="40" HeightRequest="40" />
+                    <Label Text="Dashboard" Grid.Column="1" Grid.Row="0" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" FontSize="Large" Margin="20, 0, 0, 0" TextColor="{Binding DashboardColor}" />
+                </Grid>
+                <Grid>
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateCommand}" CommandParameter="Navigation/Subjects"/>
+                    </Grid.GestureRecognizers>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Image Source="Images/icon_subject.png" Grid.Column="0" Grid.Row="0" WidthRequest="40" HeightRequest="40" />
+                    <Label Text="Subjects" Grid.Column="1" Grid.Row="0" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" FontSize="Large" Margin="20, 0, 0, 0" TextColor="{Binding SubjectsColor}" />
+                </Grid>
+                <Grid>
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateCommand}" CommandParameter="Navigation/Items?Type=Tasks"/>
+                    </Grid.GestureRecognizers>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Image Source="Images/icon_tasks.png" Grid.Column="0" Grid.Row="0" WidthRequest="40" HeightRequest="40" />
+                    <Label Text="Tasks" Grid.Column="1" Grid.Row="0" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" FontSize="Large" Margin="20, 0, 0, 0" TextColor="{Binding TasksColor}" />
+                </Grid>
+                <Grid>
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateCommand}" CommandParameter="Navigation/Items?Type=Classes"/>
+                    </Grid.GestureRecognizers>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Image Source="Images/icon_class.png" Grid.Column="0" Grid.Row="0" WidthRequest="40" HeightRequest="40" />
+                    <Label Text="Classes" Grid.Column="1" Grid.Row="0" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" FontSize="Large" Margin="20, 0, 0, 0" TextColor="{Binding ClassesColor}" />
+                </Grid>
+                <Grid>
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateCommand}" CommandParameter="Navigation/Items?Type=Exams"/>
+                    </Grid.GestureRecognizers>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Image Source="Images/icon_exam.png" Grid.Column="0" Grid.Row="0" WidthRequest="40" HeightRequest="40" />
+                    <Label Text="Exams" Grid.Column="1" Grid.Row="0" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" FontSize="Large" Margin="20, 0, 0, 0" TextColor="{Binding ExamsColor}" />
+                </Grid>
+                
+                <!--<Button Text="Subjects" Command="{Binding NavigateCommand}" CommandParameter="Navigation/Subjects" Image="Images/icon_dashboard.png" />
+                <Button Text="Tasks"    Command="{Binding NavigateCommand}" CommandParameter="Navigation/Items?Type=Tasks" Image="Images/icon_dashboard.png" />
+                <Button Text="Classes"  Command="{Binding NavigateCommand}" CommandParameter="Navigation/Items?Type=Classes" Image="Images/icon_dashboard.png" />
+                <Button Text="Exams"    Command="{Binding NavigateCommand}" CommandParameter="Navigation/Items?Type=Exams" Image="Images/icon_dashboard.png" />-->
+            </StackLayout>
+        </ContentPage>
+    </MasterDetailPage.Master>
+
+</MasterDetailPage>

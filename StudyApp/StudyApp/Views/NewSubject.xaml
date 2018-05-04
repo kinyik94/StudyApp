@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="StudyApp.Views.NewSubject"
+             Title="{Binding Title}">
+    <AbsoluteLayout>
+        <ScrollView AbsoluteLayout.LayoutBounds="0,0,1.,1." AbsoluteLayout.LayoutFlags="All">
+            <StackLayout>
+                <Grid HorizontalOptions="FillAndExpand"
+                  Margin="10, 10, 10, 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Label Text="Semester" Grid.Column="0" Grid.Row="0" />
+                    <Image Source="Images/icon_menu.png" Grid.Column="1" Grid.Row="0" HeightRequest="20" WidthRequest="20" >
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnSemesterMenuClicked" />
+                        </Label.GestureRecognizers>
+                    </Image>
+                </Grid>
+                <Picker x:Name="SemesterPickerNewSubject"
+                ItemsSource="{Binding Semesters}"
+                ItemDisplayBinding="{Binding Name}" 
+                SelectedIndex="{Binding SelectedSemesterIndex, Mode=TwoWay}"
+                HorizontalOptions="FillAndExpand"
+                Margin="10,0,10,0" />
+
+                <Label Text="Name" Margin="10,20,10,0" />
+                <Entry Placeholder="New Subject Name" Margin="10,0,10,0" HorizontalOptions="FillAndExpand" Text="{Binding SubjectName}" />
+
+            </StackLayout>
+        </ScrollView>
+        <Image Source="Images/icon_ok.png" AbsoluteLayout.LayoutBounds="1, 1, 100, 100" Margin="20"
+				AbsoluteLayout.LayoutFlags="PositionProportional">
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding FABCommand}" />
+            </Image.GestureRecognizers>
+        </Image>
+    </AbsoluteLayout>
+
+</ContentPage>

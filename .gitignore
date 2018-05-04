@@ -1,0 +1,10 @@
+.vs/*
+
+StudyApp/StudyApp/bin/*
+StudyApp/StudyApp/obj/*
+
+StudyApp/StudyApp.Android/bin/*
+StudyApp/StudyApp.Android/obj/*
+
+StudyApp/StudyApp.UWP/bin/*
+StudyApp/StudyApp.UWP/obj/*
