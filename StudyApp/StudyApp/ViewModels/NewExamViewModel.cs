@@ -13,7 +13,15 @@ namespace StudyApp.ViewModels
 	public class NewExamViewModel : BaseViewModelWithSubjects
     {
         private int _ID;
-        
+
+        private bool _deleteVisible;
+        public bool DeleteVisible
+        {
+            get { return _deleteVisible; }
+
+            set { SetProperty(ref _deleteVisible, value); }
+        }
+
         private TimeSpan _examStartTime;
         public TimeSpan ExamStartTime
         {
@@ -45,6 +53,19 @@ namespace StudyApp.ViewModels
             set { SetProperty(ref _examDate, value); }
         }
 
+        public DelegateCommand DeleteCommand { get; }
+        private async void ExecuteDeleteCommand()
+        {
+            ExamModel item = await ExamModel.GetItemByIDAsync(_ID);
+            if (item != null)
+            {
+                await ExamModel.DeleteItemAsync(item);
+            }
+            _ID = 0;
+            await NavigationService.GoBackAsync(new NavigationParameters("Type=Exams"));
+
+        }
+
         public DelegateCommand FABCommand { get; }
         private async void ExecuteFABCommand()
         {
@@ -61,7 +82,7 @@ namespace StudyApp.ViewModels
                     subjectID = sID
                 });
                 _ID = 0;
-                await NavigationService.GoBackAsync(new NavigationParameters("Type=Classes"));
+                await NavigationService.GoBackAsync(new NavigationParameters("Type=Exams"));
             }
         }
 
@@ -71,13 +92,16 @@ namespace StudyApp.ViewModels
             Title = "New Exam";
 
             FABCommand = new DelegateCommand(ExecuteFABCommand);
+            DeleteCommand = new DelegateCommand(ExecuteDeleteCommand);
         }
 
         public override async void OnNavigatingTo(NavigationParameters parameters)
         {
             Subjects = new ObservableCollection<SubjectModel>(await SubjectModel.GetAllItemsAsync());
             SelectedSubjectIndex = 0;
-            
+
+            Title = "New Exam";
+            DeleteVisible = false;
             ExamDate = DateTime.Now;
             ExamDuration = 120;
 
@@ -86,6 +110,8 @@ namespace StudyApp.ViewModels
             ExamModel exam = await ExamModel.GetItemByIDAsync(_ID);
             if (exam != null)
             {
+                Title = "Edit Exam";
+                DeleteVisible = true;
                 ExamDate = exam.Date;
                 ExamDuration = exam.Duration;
                 ExamLocation = exam.Location;

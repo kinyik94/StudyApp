@@ -8,11 +8,33 @@
         <ListView x:Name="ItemList"
             ItemsSource="{Binding Items}"
             ItemTapped="OnItemTapped"
+            RowHeight="80"
             AbsoluteLayout.LayoutBounds="0,0,1.,1." AbsoluteLayout.LayoutFlags="All">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <Label Font="Large" Text="{Binding DisplayString}" />
+                        <Frame Padding="10, 2" Margin="0, 5, 0, 5" OutlineColor="Gray" HasShadow="True">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="{Binding LeftSideSize}" />
+                                    <ColumnDefinition Width="*"  />
+                                    <ColumnDefinition Width="80" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Label Grid.Column="0" Grid.Row="0" Text="{Binding DisplayStartTime}" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" FontSize="Micro" />
+                                <Label Grid.Column="0" Grid.Row="1" Text="{Binding DisplayEndTime}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" FontSize="Micro" />
+
+                                <StackLayout Grid.Column="1" Grid.RowSpan="2" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand">
+                                    <Label Text="{Binding DisplayString}"  FontSize="Medium" />
+                                    <Label IsVisible="{Binding DetailVisible}" Margin="10, 0, 0, 0" Text="{Binding DisplayDetail}"  FontSize="Micro" TextColor="Gray" />
+                                </StackLayout>
+
+                                <Label Grid.Column="2" Grid.Row="0" Text="{Binding RightUpData}" HorizontalOptions="EndAndExpand" VerticalOptions="EndAndExpand" FontSize="Micro" />
+                            </Grid>
+                        </Frame>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>

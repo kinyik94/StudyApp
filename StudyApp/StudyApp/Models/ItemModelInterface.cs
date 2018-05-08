@@ -12,5 +12,35 @@ namespace StudyApp.Models
         {
             get;
         }
+
+        string RightUpData
+        {
+            get;
+        }
+
+        int LeftSideSize
+        {
+            get;
+        }
+
+        string DisplayStartTime
+        {
+            get;
+        }
+
+        string DisplayEndTime
+        {
+            get;
+        }
+
+        string DisplayDetail
+        {
+            get;
+        }
+
+        bool DetailVisible
+        {
+            get;
+        }
     }
 }

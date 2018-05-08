@@ -13,6 +13,15 @@ namespace StudyApp.ViewModels
 	public class NewTaskViewModel : BaseViewModelWithSubjects
 	{
         private int _ID;
+
+        private bool _deleteVisible;
+        public bool DeleteVisible
+        {
+            get { return _deleteVisible; }
+
+            set { SetProperty(ref _deleteVisible, value); }
+        }
+
         public DelegateCommand FABCommand { get; }
         private async void ExecuteFABCommand()
         {
@@ -23,6 +32,19 @@ namespace StudyApp.ViewModels
                 _ID = 0;
                 await NavigationService.GoBackAsync(new NavigationParameters("Type=Tasks"));
             }
+        }
+
+        public DelegateCommand DeleteCommand { get; }
+        private async void ExecuteDeleteCommand()
+        {
+            TaskModel item = await TaskModel.GetItemByIDAsync(_ID);
+            if (item != null)
+            {
+                await TaskModel.DeleteItemAsync(item);
+            }
+            _ID = 0;
+            await NavigationService.GoBackAsync(new NavigationParameters("Type=Tasks"));
+
         }
 
         private string _taskTitle;
@@ -55,6 +77,7 @@ namespace StudyApp.ViewModels
             Title = "New Task";
 
             FABCommand = new DelegateCommand(ExecuteFABCommand);
+            DeleteCommand = new DelegateCommand(ExecuteDeleteCommand);
         }
 
         public override async void OnNavigatingTo(NavigationParameters parameters)
@@ -62,11 +85,15 @@ namespace StudyApp.ViewModels
             Subjects = new ObservableCollection<SubjectModel>(await SubjectModel.GetAllItemsAsync());
             SelectedSubjectIndex = 0;
 
+            Title = "New Task";
+            DeleteVisible = false;
             _ID = parameters.GetValue<int>("ID");
 
             TaskModel task = await TaskModel.GetItemByIDAsync(_ID);
             if (task != null)
             {
+                Title = "Edit Task";
+                DeleteVisible = true;
                 TaskTitle = task.Title;
                 TaskDueDate = task.DueDate;
                 TaskSummary = task.Summary;

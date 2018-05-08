@@ -9,7 +9,22 @@
     <AbsoluteLayout>
         <ScrollView AbsoluteLayout.LayoutBounds="0,0,1.,1." AbsoluteLayout.LayoutFlags="All">
             <StackLayout>
-                <Label Text="Subject" Margin="10,10,10,0" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Label Text="Subject" Margin="10,10,10,0" Grid.Row="0" Grid.Column="0" />
+                    <Image IsVisible="{Binding DeleteVisible}" Source="Images/icon_remove.png" Grid.Column="1" Grid.Row="0" HeightRequest="20" WidthRequest="20" Margin="0, 0, 10, 0" >
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnDeleteClicked" />
+                        </Label.GestureRecognizers>
+                    </Image>
+                </Grid>
+                
                 <Picker x:Name="SubjectPickerNewClass"
                         ItemsSource="{Binding Subjects}"
                         ItemDisplayBinding="{Binding Name}" 
@@ -17,10 +32,23 @@
                         HorizontalOptions="FillAndExpand"
                         Margin="10,0,10,0" />
 
-                <Label Text="Day" Margin="10,20,10,0" />
+                <Grid HorizontalOptions="FillAndExpand">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0"  Text="Repeats" Margin="10,20,10,0" />
+                    <Switch Grid.Row="0" Grid.Column="1" IsToggled="{Binding ClassRepeats, Mode=TwoWay}" />
+                </Grid>
+
+                <Label Text="Day" Margin="10,20,10,0" IsVisible="{Binding ClassRepeats}" />
                 <Picker Margin="10,0,10,0" 
                         HorizontalOptions="FillAndExpand" 
-                        SelectedIndex="{Binding ClassDay, Mode=TwoWay}" >
+                        SelectedIndex="{Binding ClassDay, Mode=TwoWay}"
+                        IsVisible="{Binding ClassRepeats}" >
                     <Picker.ItemsSource>
                         <x:Array Type="{x:Type x:String}">
                             <x:String>Monday</x:String>
@@ -46,28 +74,18 @@
                        Text="{Binding ClassDuration}"/>
 
                 <Label Text="Location" Margin="10,20,10,0" />
-                <Entry Placeholder="Class Location" HorizontalOptions="FillAndExpand"
+                    <Entry Placeholder="Class Location" HorizontalOptions="FillAndExpand"
                        Text="{Binding ClassLocation}"
                        Margin="10,0,10,0" />
 
-                <Grid HorizontalOptions="FillAndExpand">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="auto" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto" />
-                    </Grid.RowDefinitions>
-                    <Label Grid.Row="0" Grid.Column="0"  Text="Repeats" Margin="10,20,10,0" />
-                    <Switch Grid.Row="0" Grid.Column="1" IsToggled="{Binding ClassRepeats}" />
-                </Grid>
-
-                <Label Text="Week" Margin="10,20,10,0" />
+                <Label Text="Week" Margin="10,20,10,0" IsVisible="{Binding ClassRepeats}" />
                 <Picker Margin="10,0,10,0" 
                         HorizontalOptions="FillAndExpand"
-                        SelectedIndex="{Binding ClassWeek, Mode=TwoWay}" >
+                        SelectedIndex="{Binding ClassWeek, Mode=TwoWay}"
+                        IsVisible="{Binding ClassRepeats}">
                     <Picker.ItemsSource>
                         <x:Array Type="{x:Type x:String}">
+                            <x:String>Every Week</x:String>
                             <x:String>Week A</x:String>
                             <x:String>Week B</x:String>
                         </x:Array>

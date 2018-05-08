@@ -19,6 +19,11 @@ namespace StudyApp.Models
             return await StudyAppDatabase.Get().database.Table<SemesterModel>().OrderByDescending(t => t.ID).ToListAsync();
         }
 
+        public static async Task<SemesterModel> GetLastAsync()
+        {
+            return await StudyAppDatabase.Get().database.Table<SemesterModel>().OrderByDescending(t => t.ID).FirstOrDefaultAsync();
+        }
+
         public static async Task<SemesterModel> GetItemByIDAsync(int ID)
         {
             return await StudyAppDatabase.Get().database.Table<SemesterModel>().Where(t => t.ID == ID).FirstOrDefaultAsync();

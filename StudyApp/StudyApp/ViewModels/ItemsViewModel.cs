@@ -52,13 +52,13 @@ namespace StudyApp.ViewModels
             switch (type)
             {
                 case "Tasks":
-                    Items = new ObservableCollection<ItemModelInterface>( await TaskModel.GetItemsAsync(DateTime.Today) );
+                    Items = new ObservableCollection<ItemModelInterface>( await TaskModel.GetAllTask() );
                     break;
                 case "Classes":
-                    Items = new ObservableCollection<ItemModelInterface>( await ClassModel.GetItemsAsync(DateTime.Today, NewClassViewModel.DaysOfWeek.IndexOf(DateTime.Now.DayOfWeek.ToString()), 0)  );
+                    Items = new ObservableCollection<ItemModelInterface>( await ClassModel.GetAllClass() );
                     break;
                 case "Exams":
-                    Items = new ObservableCollection<ItemModelInterface>( await ExamModel.GetItemsAsync(DateTime.Today) );
+                    Items = new ObservableCollection<ItemModelInterface>( await ExamModel.GetAllExam() );
                     break;
             }
         }

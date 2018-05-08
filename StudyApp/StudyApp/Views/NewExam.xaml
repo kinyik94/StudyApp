@@ -9,7 +9,21 @@
     <AbsoluteLayout>
         <ScrollView AbsoluteLayout.LayoutBounds="0,0,1.,1." AbsoluteLayout.LayoutFlags="All">
             <StackLayout>
-                <Label Text="Subject" Margin="10,10,10,0" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Label Text="Subject" Margin="10,10,10,0" Grid.Row="0" Grid.Column="0" />
+                    <Image IsVisible="{Binding DeleteVisible}" Source="Images/icon_remove.png" Grid.Column="1" Grid.Row="0" HeightRequest="20" WidthRequest="20" Margin="0, 0, 10, 0" >
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnDeleteClicked" />
+                        </Label.GestureRecognizers>
+                    </Image>
+                </Grid>
                 <Picker x:Name="SubjectPickerNewExam"
                 ItemsSource="{Binding Subjects}"
                 ItemDisplayBinding="{Binding Name}" 

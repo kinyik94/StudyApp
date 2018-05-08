@@ -72,12 +72,14 @@ namespace StudyApp.ViewModels
         {
             Semesters = new ObservableCollection<SemesterModel>(await SemesterModel.GetItemsAsync());
             SelectedSemesterIndex = 0;
-            
+
+            Title = "New Subject";
             _ID = parameters.GetValue<int>("ID");
 
             SubjectModel subject = await SubjectModel.GetItemByIDAsync(_ID);
             if (subject != null)
             {
+                Title = "Edit Subject";
                 SubjectName = subject.Name;
                 await Task.Run(() =>
                 {

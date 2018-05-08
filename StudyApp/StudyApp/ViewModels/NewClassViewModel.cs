@@ -15,6 +15,14 @@ namespace StudyApp.ViewModels
     {
         private int _ID;
 
+        private bool _deleteVisible;
+        public bool DeleteVisible
+        {
+            get { return _deleteVisible; }
+
+            set { SetProperty(ref _deleteVisible, value); }
+        }
+
         private int _classDay;
         public int ClassDay
         {
@@ -97,12 +105,27 @@ namespace StudyApp.ViewModels
                 await NavigationService.GoBackAsync(new NavigationParameters("Type=Classes"));
             }
         }
+
+        public DelegateCommand DeleteCommand { get; }
+        private async void ExecuteDeleteCommand()
+        {
+            ClassModel item = await ClassModel.GetItemByIDAsync(_ID);
+            if (item != null)
+            {
+                await ClassModel.DeleteItemAsync(item);
+            }
+            _ID = 0;
+            await NavigationService.GoBackAsync(new NavigationParameters("Type=Classes"));
+            
+        }
+
         public NewClassViewModel(INavigationService navigationService)
             : base(navigationService)
         {
             Title = "New Class";
 
             FABCommand = new DelegateCommand(ExecuteFABCommand);
+            DeleteCommand = new DelegateCommand(ExecuteDeleteCommand);
         }
 
         public static List<string> DaysOfWeek = new List<string>
@@ -121,6 +144,8 @@ namespace StudyApp.ViewModels
             Subjects = new ObservableCollection<SubjectModel>(await SubjectModel.GetAllItemsAsync());
             SelectedSubjectIndex = 0;
 
+            Title = "New Class";
+            DeleteVisible = false;
             ClassRepeats = true;
             ClassStartDate = DateTime.Now;
             ClassEndDate = DateTime.Now;
@@ -131,6 +156,8 @@ namespace StudyApp.ViewModels
             ClassModel c = await ClassModel.GetItemByIDAsync(_ID);
             if (c != null)
             {
+                Title = "Edit Class";
+                DeleteVisible = true;
                 ClassDay = c.Day;
                 ClassDuration = c.Duration;
                 ClassLocation = c.Location;

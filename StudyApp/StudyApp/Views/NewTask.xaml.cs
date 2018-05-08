@@ -11,5 +11,13 @@ namespace StudyApp.Views
         {
             InitializeComponent();
         }
+
+        async void OnDeleteClicked(object sender, EventArgs args)
+        {
+            var vm = ((NewTaskViewModel)BindingContext);
+            var answer = await DisplayAlert("Warning", "Are you sure you want to delete this item?", "Yes", "No");
+            if (answer && vm.DeleteCommand.CanExecute())
+                vm.DeleteCommand.Execute();
+        }
     }
 }

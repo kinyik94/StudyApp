@@ -27,5 +27,10 @@ namespace StudyApp.Views
             if (cmd.CanExecute(new string[2]{ id, type}))
                 cmd.Execute(new string[2] { id, type });
         }
+
+        protected override void OnAppearing()
+        {
+            DashboardList.SelectedItem = null;
+        }
     }
 }

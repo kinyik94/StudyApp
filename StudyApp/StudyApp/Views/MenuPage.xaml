@@ -20,7 +20,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
-                    <Image Source="Images/icon_dashboard.png" Grid.Column="0" Grid.Row="0" WidthRequest="40" HeightRequest="40" />
+                    <Image Source="{Binding DashboardIconSource}" Grid.Column="0" Grid.Row="0" WidthRequest="40" HeightRequest="40" />
                     <Label Text="Dashboard" Grid.Column="1" Grid.Row="0" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" FontSize="Large" Margin="20, 0, 0, 0" TextColor="{Binding DashboardColor}" />
                 </Grid>
                 <Grid>
@@ -34,7 +34,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
-                    <Image Source="Images/icon_subject.png" Grid.Column="0" Grid.Row="0" WidthRequest="40" HeightRequest="40" />
+                    <Image Source="{Binding SubjectsIconSource}" Grid.Column="0" Grid.Row="0" WidthRequest="40" HeightRequest="40" />
                     <Label Text="Subjects" Grid.Column="1" Grid.Row="0" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" FontSize="Large" Margin="20, 0, 0, 0" TextColor="{Binding SubjectsColor}" />
                 </Grid>
                 <Grid>
@@ -48,7 +48,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
-                    <Image Source="Images/icon_tasks.png" Grid.Column="0" Grid.Row="0" WidthRequest="40" HeightRequest="40" />
+                    <Image Source="{Binding TasksIconSource}" Grid.Column="0" Grid.Row="0" WidthRequest="40" HeightRequest="40" />
                     <Label Text="Tasks" Grid.Column="1" Grid.Row="0" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" FontSize="Large" Margin="20, 0, 0, 0" TextColor="{Binding TasksColor}" />
                 </Grid>
                 <Grid>
@@ -62,7 +62,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
-                    <Image Source="Images/icon_class.png" Grid.Column="0" Grid.Row="0" WidthRequest="40" HeightRequest="40" />
+                    <Image Source="{Binding ClassesIconSource}" Grid.Column="0" Grid.Row="0" WidthRequest="40" HeightRequest="40" />
                     <Label Text="Classes" Grid.Column="1" Grid.Row="0" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" FontSize="Large" Margin="20, 0, 0, 0" TextColor="{Binding ClassesColor}" />
                 </Grid>
                 <Grid>
@@ -76,7 +76,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
-                    <Image Source="Images/icon_exam.png" Grid.Column="0" Grid.Row="0" WidthRequest="40" HeightRequest="40" />
+                    <Image Source="{Binding ExamsIconSource}" Grid.Column="0" Grid.Row="0" WidthRequest="40" HeightRequest="40" />
                     <Label Text="Exams" Grid.Column="1" Grid.Row="0" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" FontSize="Large" Margin="20, 0, 0, 0" TextColor="{Binding ExamsColor}" />
                 </Grid>
                 
