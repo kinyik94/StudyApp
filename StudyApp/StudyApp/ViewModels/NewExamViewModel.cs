@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace StudyApp.ViewModels
 {
-	public class NewExamViewModel : BaseViewModelWithSubjects
+    public class NewExamViewModel : BaseViewModelWithSubjects
     {
         private int _ID;
 
@@ -56,13 +56,19 @@ namespace StudyApp.ViewModels
         public DelegateCommand DeleteCommand { get; }
         private async void ExecuteDeleteCommand()
         {
-            ExamModel item = await ExamModel.GetItemByIDAsync(_ID);
-            if (item != null)
+            try
             {
-                await ExamModel.DeleteItemAsync(item);
+                ExamModel item = await ExamModel.GetItemByIDAsync(_ID);
+                if (item != null)
+                {
+                    await ExamModel.DeleteItemAsync(item);
+                }
             }
-            _ID = 0;
-            await NavigationService.GoBackAsync(new NavigationParameters("Type=Exams"));
+            finally
+            {
+                _ID = 0;
+                await NavigationService.GoBackAsync(new NavigationParameters("Type=Exams"));
+            }
 
         }
 
@@ -72,24 +78,30 @@ namespace StudyApp.ViewModels
             int sID = Subjects[SelectedSubjectIndex].ID;
             if (sID > 0 && ExamDuration > 0 && ExamDuration < 500)
             {
-                await ExamModel.SaveItemAsync(new ExamModel
+                try
                 {
-                    ID = _ID,
-                    StartTime = ExamStartTime,
-                    Duration = ExamDuration,
-                    Location = ExamLocation,
-                    Date = ExamDate,
-                    subjectID = sID
-                });
-                _ID = 0;
-                await NavigationService.GoBackAsync(new NavigationParameters("Type=Exams"));
+                    await ExamModel.SaveItemAsync(new ExamModel
+                    {
+                        ID = _ID,
+                        StartTime = ExamStartTime,
+                        Duration = ExamDuration,
+                        Location = ExamLocation,
+                        Date = ExamDate,
+                        subjectID = sID
+                    });
+                }
+                finally
+                {
+                    _ID = 0;
+                    await NavigationService.GoBackAsync(new NavigationParameters("Type=Exams"));
+                }
             }
         }
 
         public NewExamViewModel(INavigationService navigationService)
             : base(navigationService)
         {
-            Title = "New Exam";
+            Title = "Exam";
 
             FABCommand = new DelegateCommand(ExecuteFABCommand);
             DeleteCommand = new DelegateCommand(ExecuteDeleteCommand);
@@ -97,38 +109,48 @@ namespace StudyApp.ViewModels
 
         public override async void OnNavigatingTo(NavigationParameters parameters)
         {
-            Subjects = new ObservableCollection<SubjectModel>(await SubjectModel.GetAllItemsAsync());
+            try
+            {
+                Subjects = new ObservableCollection<SubjectModel>(await SubjectModel.GetAllItemsAsync());
+            }
+            catch
+            {
+                if(Subjects != null)
+                    Subjects.Clear();
+            }
             SelectedSubjectIndex = 0;
 
-            Title = "New Exam";
+            Title = "Exam";
             DeleteVisible = false;
             ExamDate = DateTime.Now;
             ExamDuration = 120;
 
             _ID = parameters.GetValue<int>("ID");
 
-            ExamModel exam = await ExamModel.GetItemByIDAsync(_ID);
-            if (exam != null)
+            try
             {
-                Title = "Edit Exam";
-                DeleteVisible = true;
-                ExamDate = exam.Date;
-                ExamDuration = exam.Duration;
-                ExamLocation = exam.Location;
-                ExamStartTime = exam.StartTime;
-                await Task.Run(() =>
+                ExamModel exam = await ExamModel.GetItemByIDAsync(_ID);
+                if (exam != null)
                 {
-                    for (int i = 0; i < Subjects.Count(); i++)
+                    DeleteVisible = true;
+                    ExamDate = exam.Date;
+                    ExamDuration = exam.Duration;
+                    ExamLocation = exam.Location;
+                    ExamStartTime = exam.StartTime;
+                    await Task.Run(() =>
                     {
-                        if (Subjects[i].ID == exam.subjectID)
+                        for (int i = 0; i < Subjects.Count(); i++)
                         {
-                            SelectedSubjectIndex = i;
-                            break;
+                            if (Subjects[i].ID == exam.subjectID)
+                            {
+                                SelectedSubjectIndex = i;
+                                break;
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
-
+            finally { }
         }
     }
 }

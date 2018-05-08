@@ -15,8 +15,14 @@ namespace StudyApp.ViewModels
         {
             if (SemesterName != null && SemesterName.Length > 0)
             {
-                await SemesterModel.SaveItemAsync(new SemesterModel { ID = _ID, Name = SemesterName, StartDate = StartDate, EndDate = EndDate });
-                await NavigationService.GoBackAsync();
+                try
+                {
+                    await SemesterModel.SaveItemAsync(new SemesterModel { ID = _ID, Name = SemesterName, StartDate = StartDate, EndDate = EndDate });
+                }
+                finally
+                {
+                    await NavigationService.GoBackAsync();
+                }
             }
         }
 
@@ -56,7 +62,7 @@ namespace StudyApp.ViewModels
             _ID = 0;
         }
 
-        public override async void OnNavigatingTo(NavigationParameters parameters)
+        public override async void OnNavigatedTo(NavigationParameters parameters)
         {
             string Action = parameters.GetValue<string>("Action");
             StartDate = DateTime.Now;
@@ -64,13 +70,17 @@ namespace StudyApp.ViewModels
             if (Action == "Edit Semester")
             {
                 _ID = parameters.GetValue<int>("ID");
-                SemesterModel sem = await SemesterModel.GetItemByIDAsync(_ID);
-                if (sem != null)
+                try
                 {
-                    SemesterName = sem.Name;
-                    StartDate = sem.StartDate;
-                    EndDate = sem.EndDate;
+                    SemesterModel sem = await SemesterModel.GetItemByIDAsync(_ID);
+                    if (sem != null)
+                    {
+                        SemesterName = sem.Name;
+                        StartDate = sem.StartDate;
+                        EndDate = sem.EndDate;
+                    }
                 }
+                finally { }
             }
         }
     }

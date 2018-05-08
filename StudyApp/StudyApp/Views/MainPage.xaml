@@ -23,7 +23,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell >
-                        <Frame Padding="10, 2" Margin="0, 5, 0, 5" OutlineColor="Gray" HasShadow="True">
+                        <Frame Padding="10, 2" Margin="0, 5, 0, 5" OutlineColor="Gray" HasShadow="True" BackgroundColor="{Binding ItemColor}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="{Binding LeftSideSize}" />
@@ -43,6 +43,7 @@
                                 </StackLayout>
 
                                 <Label Grid.Column="2" Grid.Row="0" Text="{Binding RightUpData}" HorizontalOptions="EndAndExpand" VerticalOptions="EndAndExpand" FontSize="Micro" />
+                                <Label Grid.Column="2" Grid.Row="1" Text="{Binding RightDownData}" HorizontalOptions="EndAndExpand" VerticalOptions="EndAndExpand" FontSize="Micro" />
                             </Grid>
                         </Frame>
                     </ViewCell>

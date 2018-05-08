@@ -9,10 +9,9 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 
-
-
 namespace StudyApp.ViewModels
 {
+
     public class MainPageViewModel : ViewModelBase
     {
 
@@ -38,7 +37,7 @@ namespace StudyApp.ViewModels
         public DelegateCommand<string[]> ItemSelectCommand { get; }
         private async void ExecuteItemSelectCommand(string[] parameters)
         {
-            if (parameters.Length != 2)
+            if (parameters.Length != 2 || parameters[0] == null || parameters[1] == null)
                 return;
             string type = parameters[1].Substring(0, (parameters[1] == "Classes" ? 5 : 4));
             await NavigationService.NavigateAsync("NewItem?Type=" + type + "&ID=" + parameters[0]);
@@ -75,9 +74,38 @@ namespace StudyApp.ViewModels
                 week = ((currWeek - firstWeek) % 2) + 1;
             }
 
-            ItemCollection Tasks = new ItemCollection("Tasks", new List<ItemModelInterface>(await TaskModel.GetItemsAsync(DateTime.Today)));
-            ItemCollection Classes = new ItemCollection("Classes", new List<ItemModelInterface>(await ClassModel.GetItemsAsync(DateTime.Today, NewClassViewModel.DaysOfWeek.IndexOf(DateTime.Now.DayOfWeek.ToString()), week)));
-            ItemCollection Exams = new ItemCollection("Exams", new List<ItemModelInterface>(await ExamModel.GetItemsAsync(DateTime.Today)));
+            List<DateTime> dates = new List<DateTime>();
+            dates.Add(DateTime.Today);
+            dates.Add(DateTime.Today.AddDays(1));
+
+            ItemCollection Tasks;
+            ItemCollection Classes;
+            ItemCollection Exams;
+
+            try
+            {
+                Tasks = new ItemCollection("Tasks", new List<ItemModelInterface>(await TaskModel.GetItemsAsync(dates)));
+            }
+            catch
+            {
+                Tasks = new ItemCollection("Tasks");
+            }
+            try
+            {
+                Classes = new ItemCollection("Classes", new List<ItemModelInterface>(await ClassModel.GetItemsAsync(DateTime.Today, NewClassViewModel.DaysOfWeek.IndexOf(DateTime.Now.DayOfWeek.ToString()), week)));
+            }
+            catch
+            {
+                Classes = new ItemCollection("Classes");
+            }
+            try
+            {
+                Exams = new ItemCollection("Exams", new List<ItemModelInterface>(await ExamModel.GetItemsAsync(dates)));
+            }
+            catch
+            {
+                Exams = new ItemCollection("Exams");
+            }
 
             Items.Add(Exams);
             Items.Add(Classes);

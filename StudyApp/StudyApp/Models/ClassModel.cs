@@ -55,7 +55,7 @@ namespace StudyApp.Models
         {
             List<ClassModel> classes = await StudyAppDatabase.Get().database.Table<ClassModel>()
                 .Where(c => (
-                            (c.Repeats && (c.Day == day && (c.Week == week || c.Week == 0) && c.StartDate <= now && c.EndDate >= now)) || 
+                            (c.Repeats && c.Day == day && (c.Week == week || c.Week == 0) && c.StartDate <= now && c.EndDate >= now) || 
                             (!c.Repeats && c.StartDate == now)
                       ))
                 .OrderBy(c => c.StartTime).ToListAsync();
@@ -141,6 +141,11 @@ namespace StudyApp.Models
             get { return Location; }
         }
 
+        public string RightDownData
+        {
+            get { return null; }
+        }
+
         public int LeftSideSize
         {
             get { return 60; }
@@ -149,6 +154,15 @@ namespace StudyApp.Models
         public bool DetailVisible
         {
             get { return false; }
+        }
+
+        public string ItemColor
+        {
+            get
+            {
+                bool past = DateTime.Now.TimeOfDay > StartTime;
+                return past ? "LightGray" : "White";
+            }
         }
 
     }

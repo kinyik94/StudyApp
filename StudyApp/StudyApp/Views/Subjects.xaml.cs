@@ -28,9 +28,13 @@ namespace StudyApp.Views
         void OnSubjectTapped(object sender, EventArgs args)
         {
             var cmd = ((SubjectsViewModel)BindingContext).SubjectSelectCommand;
-            string id = ((SubjectModel)(((ItemTappedEventArgs)args).Item)).ID.ToString();
-            if (cmd.CanExecute(id))
-                cmd.Execute(id);
+            ItemTappedEventArgs eargs = (ItemTappedEventArgs)args;
+            if (eargs != null)
+            {
+                string id = ((SubjectModel)(eargs.Item)).ID.ToString();
+                if (cmd.CanExecute(id))
+                    cmd.Execute(id);
+            }
         }
 
     }

@@ -22,10 +22,13 @@ namespace StudyApp.Views
         {
             var cmd = ((MainPageViewModel)BindingContext).ItemSelectCommand;
             ItemTappedEventArgs eargs = (ItemTappedEventArgs)args;
-            string id = ((ItemModelInterface)(eargs.Item)).GetID().ToString();
-            string type = ((ItemCollection)eargs.Group).Name;
-            if (cmd.CanExecute(new string[2]{ id, type}))
-                cmd.Execute(new string[2] { id, type });
+            if (eargs != null)
+            {
+                string id = ((ItemModelInterface)(eargs.Item)).GetID().ToString();
+                string type = ((ItemCollection)eargs.Group).Name;
+                if (cmd.CanExecute(new string[2] { id, type }))
+                    cmd.Execute(new string[2] { id, type });
+            }
         }
 
         protected override void OnAppearing()

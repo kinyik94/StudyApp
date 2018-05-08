@@ -17,14 +17,18 @@ namespace StudyApp.Views
 		public Items ()
 		{
 			InitializeComponent ();
-		}
+        }
         
         void OnItemTapped(object sender, EventArgs args)
         {
             var cmd = ((ItemsViewModel)BindingContext).ItemSelectCommand;
-            string id = ((ItemModelInterface)(((ItemTappedEventArgs)args).Item)).GetID().ToString();
-            if (cmd.CanExecute(id))
-                cmd.Execute(id);
+            ItemTappedEventArgs eargs = (ItemTappedEventArgs)args;
+            if (eargs != null)
+            {
+                string id = ((ItemModelInterface)(eargs.Item)).GetID().ToString();
+                if (cmd.CanExecute(id))
+                    cmd.Execute(id);
+            }
         }
     }
 }

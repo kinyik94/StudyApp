@@ -18,6 +18,11 @@ namespace StudyApp.Models
             get;
         }
 
+        string RightDownData
+        {
+            get;
+        }
+
         int LeftSideSize
         {
             get;
@@ -39,6 +44,11 @@ namespace StudyApp.Models
         }
 
         bool DetailVisible
+        {
+            get;
+        }
+
+        string ItemColor
         {
             get;
         }

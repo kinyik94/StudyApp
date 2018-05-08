@@ -17,10 +17,16 @@ namespace StudyApp.ViewModels
         {
             if (SelectedSemesterIndex >= 0 && SubjectName != null && SubjectName.Length >= 0)
             {
-                int sID = Semesters[SelectedSemesterIndex].ID;
-                await SubjectModel.SaveItemAsync(new SubjectModel { ID = _ID, Name = SubjectName, semesterID = sID });
-                _ID = 0;
-                await NavigationService.GoBackAsync();
+                try
+                {
+                    int sID = Semesters[SelectedSemesterIndex].ID;
+                    await SubjectModel.SaveItemAsync(new SubjectModel { ID = _ID, Name = SubjectName, semesterID = sID });
+                }
+                finally
+                {
+                    _ID = 0;
+                    await NavigationService.GoBackAsync();
+                }
             }
         }
 
@@ -68,32 +74,43 @@ namespace StudyApp.ViewModels
             MenuCommand = new DelegateCommand<string>(ExecuteMenuCommand);
         }
 
-        public override async void OnNavigatingTo(NavigationParameters parameters)
+        public override async void OnNavigatedTo(NavigationParameters parameters)
         {
-            Semesters = new ObservableCollection<SemesterModel>(await SemesterModel.GetItemsAsync());
+            try
+            {
+                Semesters = new ObservableCollection<SemesterModel>(await SemesterModel.GetItemsAsync());
+            }
+            catch
+            {
+                if(Semesters != null)
+                    Semesters.Clear();
+            }
             SelectedSemesterIndex = 0;
 
             Title = "New Subject";
             _ID = parameters.GetValue<int>("ID");
-
-            SubjectModel subject = await SubjectModel.GetItemByIDAsync(_ID);
-            if (subject != null)
+            try
             {
-                Title = "Edit Subject";
-                SubjectName = subject.Name;
-                await Task.Run(() =>
+                SubjectModel subject = await SubjectModel.GetItemByIDAsync(_ID);
+                if (subject != null)
                 {
-                    for (int i = 0; i < Semesters.Count(); i++)
+                    Title = "Edit Subject";
+                    SubjectName = subject.Name;
+                    await Task.Run(() =>
                     {
-                        if (Semesters[i].ID == subject.semesterID)
+                        for (int i = 0; i < Semesters.Count(); i++)
                         {
-                            SelectedSemesterIndex = i;
-                            break;
+                            if (Semesters[i].ID == subject.semesterID)
+                            {
+                                SelectedSemesterIndex = i;
+                                break;
+                            }
                         }
-                    }
-                });
-                
+                    });
+
+                }
             }
+            finally { }
             
         }
     }

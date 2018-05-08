@@ -2,10 +2,12 @@
 using Prism.Mvvm;
 using Prism.Navigation;
 using StudyApp.Models;
+using StudyApp.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Xamarin.Forms;
 
 namespace StudyApp.ViewModels
 {
@@ -41,25 +43,31 @@ namespace StudyApp.ViewModels
 
             FABCommand = new DelegateCommand(ExecuteFABCommand);
             ItemSelectCommand = new DelegateCommand<string>(ExecuteItemSelectCommand);
-
         }
 
         public override async void OnNavigatedTo(NavigationParameters parameters)
         {
-            String type = parameters.GetValue<string>("Type");
-            Title = type;
+            string type = parameters.GetValue<string>("Type");
+            Title = type ?? "Tasks";
             Items.Clear();
-            switch (type)
+            try
             {
-                case "Tasks":
-                    Items = new ObservableCollection<ItemModelInterface>( await TaskModel.GetAllTask() );
-                    break;
-                case "Classes":
-                    Items = new ObservableCollection<ItemModelInterface>( await ClassModel.GetAllClass() );
-                    break;
-                case "Exams":
-                    Items = new ObservableCollection<ItemModelInterface>( await ExamModel.GetAllExam() );
-                    break;
+                switch (type)
+                {
+                    case "Classes":
+                        Items = new ObservableCollection<ItemModelInterface>(await ClassModel.GetAllClass());
+                        break;
+                    case "Exams":
+                        Items = new ObservableCollection<ItemModelInterface>(await ExamModel.GetAllExam());
+                        break;
+                    default:
+                        Items = new ObservableCollection<ItemModelInterface>(await TaskModel.GetAllTask());
+                        break;
+                }
+            }
+            catch
+            {
+                Items.Clear();
             }
         }
     }

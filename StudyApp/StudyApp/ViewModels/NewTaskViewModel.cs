@@ -28,22 +28,34 @@ namespace StudyApp.ViewModels
             int sID = Subjects[SelectedSubjectIndex].ID;
             if (sID > 0 && TaskTitle != null && TaskTitle.Length > 0)
             {
-                await TaskModel.SaveItemAsync(new TaskModel { ID = _ID, Title = TaskTitle, subjectID = sID, DueDate = TaskDueDate, Summary = TaskSummary });
-                _ID = 0;
-                await NavigationService.GoBackAsync(new NavigationParameters("Type=Tasks"));
+                try
+                {
+                    await TaskModel.SaveItemAsync(new TaskModel { ID = _ID, Title = TaskTitle, subjectID = sID, DueDate = TaskDueDate, Summary = TaskSummary });
+                }
+                finally
+                {
+                    _ID = 0;
+                    await NavigationService.GoBackAsync(new NavigationParameters("Type=Tasks"));
+                }
             }
         }
 
         public DelegateCommand DeleteCommand { get; }
         private async void ExecuteDeleteCommand()
         {
-            TaskModel item = await TaskModel.GetItemByIDAsync(_ID);
-            if (item != null)
+            try
             {
-                await TaskModel.DeleteItemAsync(item);
+                TaskModel item = await TaskModel.GetItemByIDAsync(_ID);
+                if (item != null)
+                {
+                    await TaskModel.DeleteItemAsync(item);
+                }
             }
-            _ID = 0;
-            await NavigationService.GoBackAsync(new NavigationParameters("Type=Tasks"));
+            finally
+            {
+                _ID = 0;
+                await NavigationService.GoBackAsync(new NavigationParameters("Type=Tasks"));
+            }
 
         }
 
@@ -74,7 +86,7 @@ namespace StudyApp.ViewModels
         public NewTaskViewModel(INavigationService navigationService)
             : base(navigationService)
         {
-            Title = "New Task";
+            Title = "Task";
 
             FABCommand = new DelegateCommand(ExecuteFABCommand);
             DeleteCommand = new DelegateCommand(ExecuteDeleteCommand);
@@ -82,34 +94,44 @@ namespace StudyApp.ViewModels
 
         public override async void OnNavigatingTo(NavigationParameters parameters)
         {
-            Subjects = new ObservableCollection<SubjectModel>(await SubjectModel.GetAllItemsAsync());
+            try
+            {
+                Subjects = new ObservableCollection<SubjectModel>(await SubjectModel.GetAllItemsAsync());
+            }
+            catch
+            {
+                if(Subjects != null)
+                    Subjects.Clear();
+            }
             SelectedSubjectIndex = 0;
 
-            Title = "New Task";
+            Title = "Task";
             DeleteVisible = false;
             _ID = parameters.GetValue<int>("ID");
 
-            TaskModel task = await TaskModel.GetItemByIDAsync(_ID);
-            if (task != null)
+            try
             {
-                Title = "Edit Task";
-                DeleteVisible = true;
-                TaskTitle = task.Title;
-                TaskDueDate = task.DueDate;
-                TaskSummary = task.Summary;
-                await Task.Run(() =>
+                TaskModel task = await TaskModel.GetItemByIDAsync(_ID);
+                if (task != null)
                 {
-                    for (int i = 0; i < Subjects.Count(); i++)
+                    DeleteVisible = true;
+                    TaskTitle = task.Title;
+                    TaskDueDate = task.DueDate;
+                    TaskSummary = task.Summary;
+                    await Task.Run(() =>
                     {
-                        if (Subjects[i].ID == task.subjectID)
+                        for (int i = 0; i < Subjects.Count(); i++)
                         {
-                            SelectedSubjectIndex = i;
-                            break;
+                            if (Subjects[i].ID == task.subjectID)
+                            {
+                                SelectedSubjectIndex = i;
+                                break;
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
-
+            finally { }
         }
     }
 }

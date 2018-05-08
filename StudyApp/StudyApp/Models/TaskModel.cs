@@ -26,7 +26,7 @@ namespace StudyApp.Models
 
         public static async Task<List<TaskModel>> GetAllTask()
         {
-            List<TaskModel> tasks = await StudyAppDatabase.Get().database.Table<TaskModel>().ToListAsync();
+            List<TaskModel> tasks = await StudyAppDatabase.Get().database.Table<TaskModel>().OrderBy(s => s.DueDate).ToListAsync();
             for (int i = tasks.Count - 1; i >= 0; --i)
             {
                 var task = tasks[i];
@@ -43,9 +43,9 @@ namespace StudyApp.Models
             return tasks;
         }
 
-        public static async Task<List<TaskModel>> GetItemsAsync(DateTime now)
+        public static async Task<List<TaskModel>> GetItemsAsync(List<DateTime> dates)
         {
-            List<TaskModel> tasks = await StudyAppDatabase.Get().database.Table<TaskModel>().Where(s => s.DueDate >= now).OrderByDescending(s => s.DueDate).ToListAsync();
+            List<TaskModel> tasks = await StudyAppDatabase.Get().database.Table<TaskModel>().Where(s => dates.Contains(s.DueDate)).OrderBy(s => s.DueDate).ToListAsync();
             for (int i = tasks.Count - 1; i >= 0; --i)
             {
                 var task = tasks[i];
@@ -128,6 +128,11 @@ namespace StudyApp.Models
             get { return DueDate.ToString("m"); }
         }
 
+        public string RightDownData
+        {
+            get { return null; }
+        }
+
         public int LeftSideSize
         {
             get { return 0; }
@@ -136,6 +141,14 @@ namespace StudyApp.Models
         public bool DetailVisible
         {
             get { return true; }
+        }
+
+        public string ItemColor
+        {
+            get
+            {
+                return "White";
+            }
         }
     }
 }

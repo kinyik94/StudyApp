@@ -99,30 +99,52 @@ namespace StudyApp.ViewModels
             int sID = Subjects[SelectedSubjectIndex].ID;
             if (sID > 0 && ClassDay > 0 && ClassDuration > 0 && ClassDuration < 500 && ClassWeek >= 0)
             {
-                await ClassModel.SaveItemAsync(new ClassModel { ID = _ID, Day = ClassDay, StartTime = ClassStartTime, Duration = ClassDuration, Repeats = ClassRepeats, Week = ClassWeek,
-                    Location = ClassLocation, StartDate = ClassStartDate, EndDate = ClassEndDate, subjectID = sID });
-                _ID = 0;
-                await NavigationService.GoBackAsync(new NavigationParameters("Type=Classes"));
+                try
+                {
+                    await ClassModel.SaveItemAsync(new ClassModel
+                    {
+                        ID = _ID,
+                        Day = ClassDay,
+                        StartTime = ClassStartTime,
+                        Duration = ClassDuration,
+                        Repeats = ClassRepeats,
+                        Week = ClassWeek,
+                        Location = ClassLocation,
+                        StartDate = ClassStartDate,
+                        EndDate = ClassEndDate,
+                        subjectID = sID
+                    });
+                }
+                finally
+                {
+                    _ID = 0;
+                    await NavigationService.GoBackAsync(new NavigationParameters("Type=Classes"));
+                }
             }
         }
 
         public DelegateCommand DeleteCommand { get; }
         private async void ExecuteDeleteCommand()
         {
-            ClassModel item = await ClassModel.GetItemByIDAsync(_ID);
-            if (item != null)
+            try
             {
-                await ClassModel.DeleteItemAsync(item);
+                ClassModel item = await ClassModel.GetItemByIDAsync(_ID);
+                if (item != null)
+                {
+                    await ClassModel.DeleteItemAsync(item);
+                }
             }
-            _ID = 0;
-            await NavigationService.GoBackAsync(new NavigationParameters("Type=Classes"));
-            
+            finally
+            {
+                _ID = 0;
+                await NavigationService.GoBackAsync(new NavigationParameters("Type=Classes"));
+            }
         }
 
         public NewClassViewModel(INavigationService navigationService)
             : base(navigationService)
         {
-            Title = "New Class";
+            Title = "Class";
 
             FABCommand = new DelegateCommand(ExecuteFABCommand);
             DeleteCommand = new DelegateCommand(ExecuteDeleteCommand);
@@ -141,10 +163,18 @@ namespace StudyApp.ViewModels
 
         public override async void OnNavigatingTo(NavigationParameters parameters)
         {
-            Subjects = new ObservableCollection<SubjectModel>(await SubjectModel.GetAllItemsAsync());
+            try
+            {
+                Subjects = new ObservableCollection<SubjectModel>(await SubjectModel.GetAllItemsAsync());
+            }
+            catch
+            {
+                if(Subjects != null)
+                    Subjects.Clear();
+            }
             SelectedSubjectIndex = 0;
 
-            Title = "New Class";
+            Title = "Class";
             DeleteVisible = false;
             ClassRepeats = true;
             ClassStartDate = DateTime.Now;
@@ -152,33 +182,36 @@ namespace StudyApp.ViewModels
             ClassDuration = 120;
             ClassDay = DaysOfWeek.IndexOf(DateTime.Now.DayOfWeek.ToString());
             _ID = parameters.GetValue<int>("ID");
-            
-            ClassModel c = await ClassModel.GetItemByIDAsync(_ID);
-            if (c != null)
-            {
-                Title = "Edit Class";
-                DeleteVisible = true;
-                ClassDay = c.Day;
-                ClassDuration = c.Duration;
-                ClassLocation = c.Location;
-                ClassStartTime = c.StartTime;
-                ClassRepeats = c.Repeats;
-                ClassStartDate = c.StartDate;
-                ClassEndDate = c.EndDate;
-                ClassWeek = c.Week;
-                await Task.Run(() =>
-                {
-                    for (int i = 0; i < Subjects.Count(); i++)
-                    {
-                        if (Subjects[i].ID == c.subjectID)
-                        {
-                            SelectedSubjectIndex = i;
-                            break;
-                        }
-                    }
-                });
-            }
 
+            try
+            {
+                ClassModel c = await ClassModel.GetItemByIDAsync(_ID);
+
+                if (c != null)
+                {
+                    DeleteVisible = true;
+                    ClassDay = c.Day;
+                    ClassDuration = c.Duration;
+                    ClassLocation = c.Location;
+                    ClassStartTime = c.StartTime;
+                    ClassRepeats = c.Repeats;
+                    ClassStartDate = c.StartDate;
+                    ClassEndDate = c.EndDate;
+                    ClassWeek = c.Week;
+                    await Task.Run(() =>
+                    {
+                        for (int i = 0; i < Subjects.Count(); i++)
+                        {
+                            if (Subjects[i].ID == c.subjectID)
+                            {
+                                SelectedSubjectIndex = i;
+                                break;
+                            }
+                        }
+                    });
+                }
+            }
+            finally { }
         }
     }
 }

@@ -9,8 +9,6 @@ namespace StudyApp.ViewModels
 {
     public class NewItemViewModel : ViewModelBase
     {
-        string Type;
-
         private int _childIndex;
         public int ChildIndex
         {
@@ -22,25 +20,23 @@ namespace StudyApp.ViewModels
         public NewItemViewModel(INavigationService navigationService)
             : base(navigationService)
         {
-            Type = "Task";
-            Title = "New " + Type;
+            Title = "Task";
             ChildIndex = 0;
         }
 
         public override void OnNavigatingTo(NavigationParameters parameters)
         {
-            Type = parameters.GetValue<string>("Type");
-            Title = "New " + Type;
-            switch (Type)
+            Title = parameters.GetValue<string>("Type");
+            switch (Title)
             {
-                case "Task":
-                    ChildIndex = 0;
-                    break;
                 case "Class":
                     ChildIndex = 1;
                     break;
                 case "Exam":
                     ChildIndex = 2;
+                    break;
+                default:
+                    ChildIndex = 0;
                     break;
 
             }

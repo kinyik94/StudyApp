@@ -48,7 +48,15 @@ namespace StudyApp.ViewModels
             if (SelectedSemesterIndex >= 0)
             {
                 int sID = Semesters[SelectedSemesterIndex].ID;
-                Subjects = new ObservableCollection<SubjectModel>(await SubjectModel.GetItemsAsync(sID));
+                try
+                {
+                    Subjects = new ObservableCollection<SubjectModel>(await SubjectModel.GetItemsAsync(sID));
+                }
+                catch
+                {
+                    if(Subjects != null)
+                        Subjects.Clear();
+                }
             }
         }
 
@@ -73,11 +81,15 @@ namespace StudyApp.ViewModels
             
         }
 
-        public override async void OnNavigatingTo(NavigationParameters parameters)
+        public override async void OnNavigatedTo(NavigationParameters parameters)
         {
-            Semesters = new ObservableCollection<SemesterModel>( await SemesterModel.GetItemsAsync() );
-            SelectedSemesterIndex = 0;
-            ExecuteSemesterChangedCommand();
+            try
+            {
+                Semesters = new ObservableCollection<SemesterModel>(await SemesterModel.GetItemsAsync());
+                SelectedSemesterIndex = 0;
+                ExecuteSemesterChangedCommand();
+            }
+            finally { }
         }
     }
 }
