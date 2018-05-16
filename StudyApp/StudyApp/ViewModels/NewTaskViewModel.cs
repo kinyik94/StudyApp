@@ -25,6 +25,12 @@ namespace StudyApp.ViewModels
         public DelegateCommand FABCommand { get; }
         private async void ExecuteFABCommand()
         {
+            if (Subjects == null || SelectedSubjectIndex < 0)
+            {
+                _ID = 0;
+                await NavigationService.GoBackAsync(new NavigationParameters("Type=Tasks"));
+                return;
+            }
             int sID = Subjects[SelectedSubjectIndex].ID;
             if (sID > 0 && TaskTitle != null && TaskTitle.Length > 0)
             {
@@ -107,7 +113,11 @@ namespace StudyApp.ViewModels
 
             Title = "Task";
             DeleteVisible = false;
+            TaskDueDate = DateTime.Today;
             _ID = parameters.GetValue<int>("ID");
+
+            if (parameters.GetValue<string>("Type") != "Task")
+                return;
 
             try
             {

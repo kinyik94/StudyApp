@@ -65,8 +65,8 @@ namespace StudyApp.ViewModels
         public override async void OnNavigatedTo(NavigationParameters parameters)
         {
             string Action = parameters.GetValue<string>("Action");
-            StartDate = DateTime.Now;
-            EndDate = DateTime.Now;
+            StartDate = DateTime.Today;
+            EndDate = DateTime.Today;
             if (Action == "Edit Semester")
             {
                 _ID = parameters.GetValue<int>("ID");

@@ -96,6 +96,12 @@ namespace StudyApp.ViewModels
         public DelegateCommand FABCommand { get; }
         private async void ExecuteFABCommand()
         {
+            if (Subjects == null || SelectedSubjectIndex < 0)
+            {
+                _ID = 0;
+                await NavigationService.GoBackAsync(new NavigationParameters("Type=Classes"));
+                return;
+            }
             int sID = Subjects[SelectedSubjectIndex].ID;
             if (sID > 0 && ClassDay > 0 && ClassDuration > 0 && ClassDuration < 500 && ClassWeek >= 0)
             {
@@ -177,11 +183,14 @@ namespace StudyApp.ViewModels
             Title = "Class";
             DeleteVisible = false;
             ClassRepeats = true;
-            ClassStartDate = DateTime.Now;
-            ClassEndDate = DateTime.Now;
+            ClassStartDate = DateTime.Today;
+            ClassEndDate = DateTime.Today;
             ClassDuration = 120;
             ClassDay = DaysOfWeek.IndexOf(DateTime.Now.DayOfWeek.ToString());
             _ID = parameters.GetValue<int>("ID");
+
+            if (parameters.GetValue<string>("Type") != "Class")
+                return;
 
             try
             {

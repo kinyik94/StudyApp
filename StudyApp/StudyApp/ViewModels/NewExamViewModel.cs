@@ -75,6 +75,12 @@ namespace StudyApp.ViewModels
         public DelegateCommand FABCommand { get; }
         private async void ExecuteFABCommand()
         {
+            if (Subjects == null || SelectedSubjectIndex < 0)
+            {
+                _ID = 0;
+                await NavigationService.GoBackAsync(new NavigationParameters("Type=Exams"));
+                return;
+            }
             int sID = Subjects[SelectedSubjectIndex].ID;
             if (sID > 0 && ExamDuration > 0 && ExamDuration < 500)
             {
@@ -122,10 +128,13 @@ namespace StudyApp.ViewModels
 
             Title = "Exam";
             DeleteVisible = false;
-            ExamDate = DateTime.Now;
+            ExamDate = DateTime.Today;
             ExamDuration = 120;
 
             _ID = parameters.GetValue<int>("ID");
+
+            if (parameters.GetValue<string>("Type") != "Exam")
+                return;
 
             try
             {
