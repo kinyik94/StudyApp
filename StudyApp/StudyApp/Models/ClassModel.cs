@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace StudyApp.Models
 {
-    class ClassModel : ItemModelInterface
+    public class ClassModel : ItemModelInterface
     {
         [PrimaryKey, AutoIncrement]
         public int ID { get; set; }
@@ -51,6 +51,41 @@ namespace StudyApp.Models
             return classes;
         }
 
+        public static async Task<List<ClassModel>> GetNotifyClasses(DateTime now, TimeSpan time, int day, int week)
+        {
+            try
+            {
+                TimeSpan nextTime = time + TimeSpan.FromMinutes(15);
+                TimeSpan nextEndTime = nextTime + TimeSpan.FromMinutes(15);
+
+                List<ClassModel> classes = await StudyAppDatabase.Get().database.Table<ClassModel>()
+                .Where(c => (
+                            ((c.Repeats && c.Day == day && (c.Week == week || c.Week == 0) && c.StartDate <= now && c.EndDate >= now) ||
+                            (!c.Repeats && c.StartDate == now)) && (nextTime <= c.StartTime) && (c.StartTime < nextEndTime)
+                      ))
+                .ToListAsync();
+                for (int i = classes.Count - 1; i >= 0; --i)
+                {
+                    var c = classes[i];
+                    SubjectModel subj = await StudyAppDatabase.Get().database.Table<SubjectModel>().Where(s => s.ID == c.subjectID).FirstOrDefaultAsync();
+                    if (subj != null && subj.Name != null)
+                        c._subjectName = subj.Name;
+                    else
+                    {
+                        classes.RemoveAt(i);
+                        await StudyAppDatabase.Get().database.DeleteAsync(c);
+                    }
+
+                }
+                return classes;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return null;
+        }
+
         public static async Task<List<ClassModel>> GetItemsAsync(DateTime now, int day, int week)
         {
             List<ClassModel> classes = await StudyAppDatabase.Get().database.Table<ClassModel>()
@@ -70,7 +105,6 @@ namespace StudyApp.Models
                     classes.RemoveAt(i);
                     await StudyAppDatabase.Get().database.DeleteAsync(c);
                 }
-
             }
             return classes;
         }

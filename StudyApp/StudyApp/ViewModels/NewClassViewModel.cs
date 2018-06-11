@@ -1,6 +1,7 @@
 ﻿using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
+using StudyApp.Helper;
 using StudyApp.Models;
 using System;
 using System.Collections.Generic;
@@ -103,7 +104,7 @@ namespace StudyApp.ViewModels
                 return;
             }
             int sID = Subjects[SelectedSubjectIndex].ID;
-            if (sID > 0 && ClassDay > 0 && ClassDuration > 0 && ClassDuration < 500 && ClassWeek >= 0)
+            if (sID > 0 && ClassDuration > 0 && ClassDuration < 500 && ClassWeek >= 0)
             {
                 try
                 {
@@ -156,17 +157,6 @@ namespace StudyApp.ViewModels
             DeleteCommand = new DelegateCommand(ExecuteDeleteCommand);
         }
 
-        public static List<string> DaysOfWeek = new List<string>
-        {
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday",
-            "Saturday",
-            "Sunday"
-        };
-
         public override async void OnNavigatingTo(NavigationParameters parameters)
         {
             try
@@ -186,7 +176,7 @@ namespace StudyApp.ViewModels
             ClassStartDate = DateTime.Today;
             ClassEndDate = DateTime.Today;
             ClassDuration = 120;
-            ClassDay = DaysOfWeek.IndexOf(DateTime.Now.DayOfWeek.ToString());
+            ClassDay = DateHelper.GetDayOfWeek();
             _ID = parameters.GetValue<int>("ID");
 
             if (parameters.GetValue<string>("Type") != "Class")

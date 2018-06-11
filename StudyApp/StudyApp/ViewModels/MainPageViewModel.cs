@@ -1,6 +1,7 @@
 ﻿using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
+using StudyApp.Helper;
 using StudyApp.Models;
 using System;
 using System.Collections.Generic;
@@ -63,16 +64,6 @@ namespace StudyApp.ViewModels
         public override async void OnNavigatedTo(NavigationParameters parameters)
         {
             Items.Clear();
-            SemesterModel currSemester = await SemesterModel.GetLastAsync();
-            int week = 0;
-
-            if (currSemester != null)
-            {
-                Calendar c = new GregorianCalendar();
-                int currWeek = c.GetWeekOfYear(DateTime.Today, CalendarWeekRule.FirstDay, DayOfWeek.Monday);
-                int firstWeek = c.GetWeekOfYear(currSemester.StartDate, CalendarWeekRule.FirstDay, DayOfWeek.Monday);
-                week = ((currWeek - firstWeek) % 2) + 1;
-            }
 
             List<DateTime> dates = new List<DateTime>();
             dates.Add(DateTime.Today);
@@ -92,7 +83,7 @@ namespace StudyApp.ViewModels
             }
             try
             {
-                Classes = new ItemCollection("Classes", new List<ItemModelInterface>(await ClassModel.GetItemsAsync(DateTime.Today, NewClassViewModel.DaysOfWeek.IndexOf(DateTime.Now.DayOfWeek.ToString()), week)));
+                Classes = new ItemCollection("Classes", new List<ItemModelInterface>(await ClassModel.GetItemsAsync(DateTime.Today, DateHelper.GetDayOfWeek(), await DateHelper.GetWeek())));
             }
             catch
             {

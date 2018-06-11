@@ -1,12 +1,17 @@
-﻿using System;
+﻿using DryIoc;
+using Microsoft.Toolkit.Uwp.Notifications;
+using StudyApp.Notification;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Background;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Notifications;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -26,6 +31,7 @@ namespace StudyApp.UWP
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
+        /// 
         public App()
         {
             this.InitializeComponent();
@@ -37,9 +43,39 @@ namespace StudyApp.UWP
         /// will be used such as when the application is launched to open a specific file.
         /// </summary>
         /// <param name="e">Details about the launch request and process.</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
+            var taskRegistered = false;
+            var studyTaskName = "StudyBackgroundTask";
 
+            foreach (var task in BackgroundTaskRegistration.AllTasks)
+            {
+                if (task.Value.Name == studyTaskName)
+                {
+                    //taskRegistered = true;
+                    task.Value.Unregister(true);
+                    break;
+                }
+            }
+
+            if (!taskRegistered)
+            {
+                var builder = new BackgroundTaskBuilder();
+
+                builder.Name = studyTaskName;
+                builder.TaskEntryPoint = "UWPBackgroundTask.StudyBackgroundTask";
+                builder.SetTrigger(new TimeTrigger(15, false));
+
+                var requestStatus = await Windows.ApplicationModel.Background.BackgroundExecutionManager.RequestAccessAsync();
+                if (requestStatus != BackgroundAccessStatus.AlwaysAllowed)
+                {
+                    // Depending on the value of requestStatus, provide an appropriate response
+                    // such as notifying the user which functionality won't work as expected
+                }
+
+                BackgroundTaskRegistration task = builder.Register();
+            }
+            
 
             Frame rootFrame = Window.Current.Content as Frame;
 
@@ -72,6 +108,16 @@ namespace StudyApp.UWP
             }
             // Ensure the current window is active
             Window.Current.Activate();
+
+            Container c = StudyApp.App.Dic;
+            c.Register<IStudyNotifier, UWPStudyNotifier>(Reuse.Singleton);
+            
+            var notifier = c.Resolve<IStudyNotifier>();
+            if (notifier != null)
+            {
+                await notifier.CheckNotification();
+                notifier.StudyNotify("Debug", "That's all notification!");
+            }
         }
 
         /// <summary>

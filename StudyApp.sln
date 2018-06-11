@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2015
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudyApp", "StudyApp\StudyApp\StudyApp.csproj", "{5EC7BB25-4B76-4CD5-95D3-2C9374505760}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudyApp", "StudyApp\StudyApp\StudyApp.csproj", "{5EC7BB25-4B76-4CD5-95D3-2C9374505760}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudyApp.Android", "StudyApp\StudyApp.Android\StudyApp.Android.csproj", "{4EEE0C06-9DE3-4A1F-BFC1-43D8CA041F32}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudyApp.UWP", "StudyApp\StudyApp.UWP\StudyApp.UWP.csproj", "{11923173-6E00-47C7-99EC-3F771F0B59A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UWPBackgroundTask", "UWPBackgroundTask\UWPBackgroundTask.csproj", "{7D4764E5-F507-4AE6-B203-5128DA14E211}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,6 +83,22 @@ Global
 		{11923173-6E00-47C7-99EC-3F771F0B59A3}.Release|x86.ActiveCfg = Release|x86
 		{11923173-6E00-47C7-99EC-3F771F0B59A3}.Release|x86.Build.0 = Release|x86
 		{11923173-6E00-47C7-99EC-3F771F0B59A3}.Release|x86.Deploy.0 = Release|x86
+		{7D4764E5-F507-4AE6-B203-5128DA14E211}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D4764E5-F507-4AE6-B203-5128DA14E211}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D4764E5-F507-4AE6-B203-5128DA14E211}.Debug|ARM.ActiveCfg = Debug|ARM
+		{7D4764E5-F507-4AE6-B203-5128DA14E211}.Debug|ARM.Build.0 = Debug|ARM
+		{7D4764E5-F507-4AE6-B203-5128DA14E211}.Debug|x64.ActiveCfg = Debug|x64
+		{7D4764E5-F507-4AE6-B203-5128DA14E211}.Debug|x64.Build.0 = Debug|x64
+		{7D4764E5-F507-4AE6-B203-5128DA14E211}.Debug|x86.ActiveCfg = Debug|x86
+		{7D4764E5-F507-4AE6-B203-5128DA14E211}.Debug|x86.Build.0 = Debug|x86
+		{7D4764E5-F507-4AE6-B203-5128DA14E211}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D4764E5-F507-4AE6-B203-5128DA14E211}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D4764E5-F507-4AE6-B203-5128DA14E211}.Release|ARM.ActiveCfg = Release|ARM
+		{7D4764E5-F507-4AE6-B203-5128DA14E211}.Release|ARM.Build.0 = Release|ARM
+		{7D4764E5-F507-4AE6-B203-5128DA14E211}.Release|x64.ActiveCfg = Release|x64
+		{7D4764E5-F507-4AE6-B203-5128DA14E211}.Release|x64.Build.0 = Release|x64
+		{7D4764E5-F507-4AE6-B203-5128DA14E211}.Release|x86.ActiveCfg = Release|x86
+		{7D4764E5-F507-4AE6-B203-5128DA14E211}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,8 +1,12 @@
 ﻿using Android.App;
+using Android.Content;
 using Android.Content.PM;
 using Android.OS;
+using DryIoc;
 using Prism;
 using Prism.Ioc;
+using StudyApp.Droid.Services;
+using StudyApp.Notification;
 
 namespace StudyApp.Droid
 {
@@ -15,6 +19,12 @@ namespace StudyApp.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(bundle);
+
+            Container c = StudyApp.App.Dic;
+            c.Register<IStudyNotifier, AndroidStudyNotifier>(Reuse.Singleton);
+
+            Intent intent = new Intent("StartStudyService");
+            SendBroadcast(intent);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
             LoadApplication(new App(new AndroidInitializer()));

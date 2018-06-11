@@ -8,3 +8,6 @@ StudyApp/StudyApp.Android/obj/*
 
 StudyApp/StudyApp.UWP/bin/*
 StudyApp/StudyApp.UWP/obj/*
+
+UWPBackgroundTask/obj/*
+UWPBackgroundTask/bin/*

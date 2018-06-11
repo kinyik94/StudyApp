@@ -98,6 +98,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\UWPStudyNotifier.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -148,6 +149,10 @@
     <PackageReference Include="Prism.DryIoc.Forms" Version="7.0.0.396" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\UWPBackgroundTask\UWPBackgroundTask.csproj">
+      <Project>{7d4764e5-f507-4ae6-b203-5128da14e211}</Project>
+      <Name>UWPBackgroundTask</Name>
+    </ProjectReference>
     <ProjectReference Include="..\StudyApp\StudyApp.csproj">
       <Project>{A682884C-CB44-4A89-B752-27BB634E0ABE}</Project>
       <Name>StudyApp</Name>
@@ -156,6 +161,7 @@
   <ItemGroup>
     <None Include="StudyApp.UWP_TemporaryKey.pfx" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
