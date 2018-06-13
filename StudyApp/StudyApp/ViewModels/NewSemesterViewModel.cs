@@ -55,7 +55,7 @@ namespace StudyApp.ViewModels
         public NewSemesterViewModel(INavigationService navigationService)
             : base(navigationService)
         {
-            Title = "New Semester";
+            Title = Localization.LocalizationResources.NewSemester;
 
             FABCommand = new DelegateCommand(ExecuteFABCommand);
 
@@ -64,11 +64,13 @@ namespace StudyApp.ViewModels
 
         public override async void OnNavigatedTo(NavigationParameters parameters)
         {
+            Title = Localization.LocalizationResources.NewSemester;
             string Action = parameters.GetValue<string>("Action");
             StartDate = DateTime.Today;
             EndDate = DateTime.Today;
-            if (Action == "Edit Semester")
+            if (Action == Localization.LocalizationResources.EditSemester)
             {
+                Title = Title = Localization.LocalizationResources.EditSemester;
                 _ID = parameters.GetValue<int>("ID");
                 try
                 {

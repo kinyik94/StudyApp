@@ -129,7 +129,7 @@ namespace StudyApp.ViewModels
         public MenuPageViewModel(INavigationService navigationService)
             : base(navigationService)
         {
-            Title = "Home Page";
+            Title = Localization.LocalizationResources.ResourceManager.GetString("HomePage");
             _currentDetailPage = "Dashboard";
 
             ExamsColor = "Black";

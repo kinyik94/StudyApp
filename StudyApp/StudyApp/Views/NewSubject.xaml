@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:i18n="clr-namespace:StudyApp.Localization;assembly=StudyApp"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="StudyApp.Views.NewSubject"
              Title="{Binding Title}">
@@ -17,7 +18,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
-                    <Label Text="Semester" Grid.Column="0" Grid.Row="0" />
+                    <Label Text="{i18n:Translate Semester}" Grid.Column="0" Grid.Row="0" />
                     <Image Source="Images/icon_menu.png" Grid.Column="1" Grid.Row="0" HeightRequest="20" WidthRequest="20" >
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnSemesterMenuClicked" />
@@ -31,8 +32,8 @@
                 HorizontalOptions="FillAndExpand"
                 Margin="10,0,10,0" />
 
-                <Label Text="Name" Margin="10,20,10,0" />
-                <Entry Placeholder="New Subject Name" Margin="10,0,10,0" HorizontalOptions="FillAndExpand" Text="{Binding SubjectName}" />
+                <Label Text="{i18n:Translate Name}" Margin="10,20,10,0" />
+                <Entry Placeholder="{i18n:Translate NewSubjectName}" Margin="10,0,10,0" HorizontalOptions="FillAndExpand" Text="{Binding SubjectName}" />
 
             </StackLayout>
         </ScrollView>

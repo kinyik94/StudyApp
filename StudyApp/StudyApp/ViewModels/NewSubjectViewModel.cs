@@ -44,7 +44,7 @@ namespace StudyApp.ViewModels
         private async void ExecuteMenuCommand(string action)
         {
             string ID = "";
-            if (action == "Edit Semester")
+            if (action == Localization.LocalizationResources.EditSemester)
                 ID = "&ID=" + Semesters[SelectedSemesterIndex].ID;
             await NavigationService.NavigateAsync("NewSemester?Action=" + action + ID);
         }
@@ -68,7 +68,7 @@ namespace StudyApp.ViewModels
         public NewSubjectViewModel(INavigationService navigationService)
             : base(navigationService)
         {
-            Title = "New Subject";
+            Title = Localization.LocalizationResources.NewSubject;
 
             FABCommand = new DelegateCommand(ExecuteFABCommand);
             MenuCommand = new DelegateCommand<string>(ExecuteMenuCommand);
@@ -87,14 +87,14 @@ namespace StudyApp.ViewModels
             }
             SelectedSemesterIndex = 0;
 
-            Title = "New Subject";
+            Title = Localization.LocalizationResources.NewSubject;
             _ID = parameters.GetValue<int>("ID");
             try
             {
                 SubjectModel subject = await SubjectModel.GetItemByIDAsync(_ID);
                 if (subject != null)
                 {
-                    Title = "Edit Subject";
+                    Title = Localization.LocalizationResources.EditSubject;
                     SubjectName = subject.Name;
                     await Task.Run(() =>
                     {

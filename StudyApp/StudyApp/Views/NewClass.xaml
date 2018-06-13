@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:i18n="clr-namespace:StudyApp.Localization;assembly=StudyApp"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="StudyApp.Views.NewClass"
              Title="{Binding Title}">
@@ -17,7 +18,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
-                    <Label Text="Subject" Margin="10,10,10,0" Grid.Row="0" Grid.Column="0" />
+                    <Label Text="{i18n:Translate Subject}" Margin="10,10,10,0" Grid.Row="0" Grid.Column="0" />
                     <Image IsVisible="{Binding DeleteVisible}" Source="Images/icon_remove.png" Grid.Column="1" Grid.Row="0" HeightRequest="20" WidthRequest="20" Margin="0, 0, 10, 0" >
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnDeleteClicked" />
@@ -40,62 +41,47 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
-                    <Label Grid.Row="0" Grid.Column="0"  Text="Repeats" Margin="10,20,10,0" />
+                    <Label Grid.Row="0" Grid.Column="0"  Text="{i18n:Translate Repeats}" Margin="10,20,10,0" />
                     <Switch Grid.Row="0" Grid.Column="1" IsToggled="{Binding ClassRepeats, Mode=TwoWay}" />
                 </Grid>
 
-                <Label Text="Day" Margin="10,20,10,0" IsVisible="{Binding ClassRepeats}" />
+                <Label Text="{i18n:Translate Day}" Margin="10,20,10,0" IsVisible="{Binding ClassRepeats}" />
                 <Picker Margin="10,0,10,0" 
                         HorizontalOptions="FillAndExpand" 
                         SelectedIndex="{Binding ClassDay, Mode=TwoWay}"
-                        IsVisible="{Binding ClassRepeats}" >
-                    <Picker.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>Monday</x:String>
-                            <x:String>Tuesday</x:String>
-                            <x:String>Wednesday</x:String>
-                            <x:String>Thursday</x:String>
-                            <x:String>Friday</x:String>
-                            <x:String>Saturday</x:String>
-                            <x:String>Sunday</x:String>
-                        </x:Array>
-                    </Picker.ItemsSource>
+                        IsVisible="{Binding ClassRepeats}" 
+                        ItemsSource="{Binding Days}">
                 </Picker>
 
-                <Label Text="Start Time" Margin="10,20,10,0" />
+                <Label Text="{i18n:Translate StartTime}" Margin="10,20,10,0" />
                 <TimePicker HorizontalOptions="Start"
                             Margin="10,0,10,0"
                             Time="{Binding ClassStartTime}" />
 
-                <Label Text="Duration" Margin="10,20,10,0" />
+                <Label Text="{i18n:Translate Duration}" Margin="10,20,10,0" />
                 <Entry HorizontalOptions="FillAndExpand"
                        Keyboard="Numeric"
                        Margin="10,0,10,0"
                        Text="{Binding ClassDuration}"/>
 
-                <Label Text="Location" Margin="10,20,10,0" />
-                    <Entry Placeholder="Class Location" HorizontalOptions="FillAndExpand"
+                <Label Text="{i18n:Translate Location}" Margin="10,20,10,0" />
+                <Entry Placeholder="{i18n:Translate ClassLocation}" 
+                       HorizontalOptions="FillAndExpand"
                        Text="{Binding ClassLocation}"
                        Margin="10,0,10,0" />
 
-                <Label Text="Week" Margin="10,20,10,0" IsVisible="{Binding ClassRepeats}" />
+                <Label Text="{i18n:Translate Week}" Margin="10,20,10,0" IsVisible="{Binding ClassRepeats}" />
                 <Picker Margin="10,0,10,0" 
                         HorizontalOptions="FillAndExpand"
                         SelectedIndex="{Binding ClassWeek, Mode=TwoWay}"
-                        IsVisible="{Binding ClassRepeats}">
-                    <Picker.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>Every Week</x:String>
-                            <x:String>Week A</x:String>
-                            <x:String>Week B</x:String>
-                        </x:Array>
-                    </Picker.ItemsSource>
+                        IsVisible="{Binding ClassRepeats}"
+                        ItemsSource="{Binding Weeks}">
                 </Picker>
 
                 <Label Text="{Binding StartDateName}" Margin="10,20,10,0" />
                 <DatePicker Margin="10,0,10,0" HorizontalOptions="Start" Date="{Binding ClassStartDate}" />
 
-                <Label Text="End Date" Margin="10,20,10,0" IsVisible="{Binding ClassRepeats}" />
+                <Label Text="{i18n:Translate ClassEnd}" Margin="10,20,10,0" IsVisible="{Binding ClassRepeats}" />
                 <DatePicker Margin="10,0,10,0" HorizontalOptions="Start" IsVisible="{Binding ClassRepeats}" Date="{Binding ClassEndDate}" />
 
             </StackLayout>

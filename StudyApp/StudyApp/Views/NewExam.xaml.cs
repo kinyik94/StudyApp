@@ -14,7 +14,10 @@ namespace StudyApp.Views
         async void OnDeleteClicked(object sender, EventArgs args)
         {
             var vm = ((NewExamViewModel)BindingContext);
-            var answer = await DisplayAlert("Warning", "Are you sure you want to delete this item?", "Yes", "No");
+            var answer = await DisplayAlert(Localization.LocalizationResources.Warning,
+                Localization.LocalizationResources.DeleteWarning,
+                Localization.LocalizationResources.Yes,
+                Localization.LocalizationResources.No);
             if (answer && vm.DeleteCommand.CanExecute())
                 vm.DeleteCommand.Execute();
         }

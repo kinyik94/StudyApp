@@ -20,7 +20,7 @@ namespace StudyApp.ViewModels
         public NewItemViewModel(INavigationService navigationService)
             : base(navigationService)
         {
-            Title = "Task";
+            Title = Localization.LocalizationResources.Task;
             ChildIndex = 0;
         }
 

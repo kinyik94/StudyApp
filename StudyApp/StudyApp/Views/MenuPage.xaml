@@ -2,6 +2,7 @@
 <MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
                   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                   xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+                  xmlns:i18n="clr-namespace:StudyApp.Localization;assembly=StudyApp"
                   prism:ViewModelLocator.AutowireViewModel="True"
                   x:Class="StudyApp.Views.MenuPage"
                   Title="{Binding Title}">
@@ -21,7 +22,7 @@
                         <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
                     <Image Source="{Binding DashboardIconSource}" Grid.Column="0" Grid.Row="0" WidthRequest="40" HeightRequest="40" />
-                    <Label Text="Dashboard" Grid.Column="1" Grid.Row="0" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" FontSize="Large" Margin="20, 0, 0, 0" TextColor="{Binding DashboardColor}" />
+                    <Label Text="{i18n:Translate Dashboard}" Grid.Column="1" Grid.Row="0" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" FontSize="Large" Margin="20, 0, 0, 0" TextColor="{Binding DashboardColor}" />
                 </Grid>
                 <Grid>
                     <Grid.GestureRecognizers>
@@ -35,7 +36,7 @@
                         <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
                     <Image Source="{Binding SubjectsIconSource}" Grid.Column="0" Grid.Row="0" WidthRequest="40" HeightRequest="40" />
-                    <Label Text="Subjects" Grid.Column="1" Grid.Row="0" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" FontSize="Large" Margin="20, 0, 0, 0" TextColor="{Binding SubjectsColor}" />
+                    <Label Text="{i18n:Translate Subjects}" Grid.Column="1" Grid.Row="0" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" FontSize="Large" Margin="20, 0, 0, 0" TextColor="{Binding SubjectsColor}" />
                 </Grid>
                 <Grid>
                     <Grid.GestureRecognizers>
@@ -49,7 +50,7 @@
                         <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
                     <Image Source="{Binding TasksIconSource}" Grid.Column="0" Grid.Row="0" WidthRequest="40" HeightRequest="40" />
-                    <Label Text="Tasks" Grid.Column="1" Grid.Row="0" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" FontSize="Large" Margin="20, 0, 0, 0" TextColor="{Binding TasksColor}" />
+                    <Label Text="{i18n:Translate Tasks}" Grid.Column="1" Grid.Row="0" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" FontSize="Large" Margin="20, 0, 0, 0" TextColor="{Binding TasksColor}" />
                 </Grid>
                 <Grid>
                     <Grid.GestureRecognizers>
@@ -63,7 +64,7 @@
                         <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
                     <Image Source="{Binding ClassesIconSource}" Grid.Column="0" Grid.Row="0" WidthRequest="40" HeightRequest="40" />
-                    <Label Text="Classes" Grid.Column="1" Grid.Row="0" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" FontSize="Large" Margin="20, 0, 0, 0" TextColor="{Binding ClassesColor}" />
+                    <Label Text="{i18n:Translate Classes}" Grid.Column="1" Grid.Row="0" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" FontSize="Large" Margin="20, 0, 0, 0" TextColor="{Binding ClassesColor}" />
                 </Grid>
                 <Grid>
                     <Grid.GestureRecognizers>
@@ -77,13 +78,8 @@
                         <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
                     <Image Source="{Binding ExamsIconSource}" Grid.Column="0" Grid.Row="0" WidthRequest="40" HeightRequest="40" />
-                    <Label Text="Exams" Grid.Column="1" Grid.Row="0" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" FontSize="Large" Margin="20, 0, 0, 0" TextColor="{Binding ExamsColor}" />
+                    <Label Text="{i18n:Translate Exams}" Grid.Column="1" Grid.Row="0" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" FontSize="Large" Margin="20, 0, 0, 0" TextColor="{Binding ExamsColor}" />
                 </Grid>
-                
-                <!--<Button Text="Subjects" Command="{Binding NavigateCommand}" CommandParameter="Navigation/Subjects" Image="Images/icon_dashboard.png" />
-                <Button Text="Tasks"    Command="{Binding NavigateCommand}" CommandParameter="Navigation/Items?Type=Tasks" Image="Images/icon_dashboard.png" />
-                <Button Text="Classes"  Command="{Binding NavigateCommand}" CommandParameter="Navigation/Items?Type=Classes" Image="Images/icon_dashboard.png" />
-                <Button Text="Exams"    Command="{Binding NavigateCommand}" CommandParameter="Navigation/Items?Type=Exams" Image="Images/icon_dashboard.png" />-->
             </StackLayout>
         </ContentPage>
     </MasterDetailPage.Master>

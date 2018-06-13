@@ -53,7 +53,7 @@ namespace StudyApp.ViewModels
         public MainPageViewModel(INavigationService navigationService)
             : base(navigationService)
         {
-            Title = "Dashboard";
+            Title = Localization.LocalizationResources.Dashboard;
 
             FABCommand = new DelegateCommand(ExecuteFABCommand);
             ItemSelectCommand = new DelegateCommand<string[]>(ExecuteItemSelectCommand);
@@ -75,27 +75,27 @@ namespace StudyApp.ViewModels
 
             try
             {
-                Tasks = new ItemCollection("Tasks", new List<ItemModelInterface>(await TaskModel.GetItemsAsync(dates)));
+                Tasks = new ItemCollection(Localization.LocalizationResources.Tasks, new List<ItemModelInterface>(await TaskModel.GetItemsAsync(dates)));
             }
             catch
             {
-                Tasks = new ItemCollection("Tasks");
+                Tasks = new ItemCollection(Localization.LocalizationResources.Tasks);
             }
             try
             {
-                Classes = new ItemCollection("Classes", new List<ItemModelInterface>(await ClassModel.GetItemsAsync(DateTime.Today, DateHelper.GetDayOfWeek(), await DateHelper.GetWeek())));
+                Classes = new ItemCollection(Localization.LocalizationResources.Classes, new List<ItemModelInterface>(await ClassModel.GetItemsAsync(DateTime.Today, DateHelper.GetDayOfWeek(), await DateHelper.GetWeek())));
             }
             catch
             {
-                Classes = new ItemCollection("Classes");
+                Classes = new ItemCollection(Localization.LocalizationResources.Classes);
             }
             try
             {
-                Exams = new ItemCollection("Exams", new List<ItemModelInterface>(await ExamModel.GetItemsAsync(dates)));
+                Exams = new ItemCollection(Localization.LocalizationResources.Exams, new List<ItemModelInterface>(await ExamModel.GetItemsAsync(dates)));
             }
             catch
             {
-                Exams = new ItemCollection("Exams");
+                Exams = new ItemCollection(Localization.LocalizationResources.Exams);
             }
 
             Items.Add(Exams);

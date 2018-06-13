@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:i18n="clr-namespace:StudyApp.Localization;assembly=StudyApp"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="StudyApp.Views.NewTask"
              Title="{Binding Title}">
@@ -16,7 +17,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
-                    <Label Text="Subject" Margin="10,10,10,0" Grid.Row="0" Grid.Column="0" />
+                    <Label Text="{i18n:Translate Subject}" Margin="10,10,10,0" Grid.Row="0" Grid.Column="0" />
                     <Image IsVisible="{Binding DeleteVisible}" Source="Images/icon_remove.png" Grid.Column="1" Grid.Row="0" HeightRequest="20" WidthRequest="20" Margin="0, 0, 10, 0" >
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnDeleteClicked" />
@@ -30,20 +31,20 @@
                 HorizontalOptions="FillAndExpand"
                 Margin="10,0,10,0" />
 
-                <Label Text="Due Date" Margin="10,20,10,0" />
+                <Label Text="{i18n:Translate DueDate}" Margin="10,20,10,0" />
                 <DatePicker Margin="10,0,10,0" HorizontalOptions="Start" Date="{Binding TaskDueDate}" />
 
-                <Label Text="Title" Margin="10,20,10,0" />
-                <Entry Placeholder="Task Title" 
-               HorizontalOptions="FillAndExpand"
-               Margin="10,0,10,0"
-                       Text="{Binding TaskTitle}"/>
+                <Label Text="{i18n:Translate TaskTitle}" Margin="10,20,10,0" />
+                <Entry  Placeholder="{i18n:Translate TaskTitleEntry}" 
+                HorizontalOptions="FillAndExpand"
+                Margin="10,0,10,0"
+                Text="{Binding TaskTitle}"/>
 
-                <Label Text="Summary" Margin="10,20,10,0" />
+                <Label Text="{i18n:Translate Summary}" Margin="10,20,10,0" />
                 <Editor HorizontalOptions="FillAndExpand"
                 Margin="10,0,10,0"
                 HeightRequest="200"
-                        Text="{Binding TaskSummary}"/>
+                Text="{Binding TaskSummary}"/>
 
             </StackLayout>
         </ScrollView>

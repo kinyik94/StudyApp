@@ -28,7 +28,7 @@ namespace StudyApp.ViewModels
         private async void ExecuteMenuCommand(string action)
         {
             string ID = "";
-            if (action == "Edit Semester")
+            if (action == Localization.LocalizationResources.EditSemester)
                 ID = "&ID=" + Semesters[SelectedSemesterIndex].ID;
             await NavigationService.NavigateAsync("NewSemester?Action=" + action + ID);
         }
@@ -71,7 +71,7 @@ namespace StudyApp.ViewModels
         public SubjectsViewModel(INavigationService navigationService)
             : base(navigationService)
         {
-            Title = "Subjects";
+            Title = Localization.LocalizationResources.Subjects;
             Semesters = new ObservableCollection<SemesterModel>();
 
             SemesterChangedCommand = new DelegateCommand(ExecuteSemesterChangedCommand);

@@ -16,6 +16,21 @@ namespace StudyApp.ViewModels
     {
         private int _ID;
 
+
+
+        private static List<string> _days;
+        public List<string> Days {
+            get { return _days; }
+            private set { SetProperty(ref _days, value); }
+        }
+
+        private static List<string> _weeks;
+        public List<string> Weeks
+        {
+            get { return _weeks; }
+            private set { SetProperty(ref _weeks, value); }
+        }
+
         private bool _deleteVisible;
         public bool DeleteVisible
         {
@@ -52,7 +67,7 @@ namespace StudyApp.ViewModels
         {
             get { return _classRepeats; }
 
-            set { SetProperty(ref _classRepeats, value); StartDateName = value ? "Start Date" : "Date"; }
+            set { SetProperty(ref _classRepeats, value); StartDateName = value ? Localization.LocalizationResources.ClassStart : Localization.LocalizationResources.Date; }
         }
 
         private int _classWeek;
@@ -151,10 +166,34 @@ namespace StudyApp.ViewModels
         public NewClassViewModel(INavigationService navigationService)
             : base(navigationService)
         {
-            Title = "Class";
+            Title = Localization.LocalizationResources.Class;
 
             FABCommand = new DelegateCommand(ExecuteFABCommand);
             DeleteCommand = new DelegateCommand(ExecuteDeleteCommand);
+
+            if (_days == null)
+            {
+                _days = new List<string>{
+                    Localization.LocalizationResources.Monday,
+                    Localization.LocalizationResources.Tuesday,
+                    Localization.LocalizationResources.Wednesday,
+                    Localization.LocalizationResources.Thursday,
+                    Localization.LocalizationResources.Friday,
+                    Localization.LocalizationResources.Saturday,
+                    Localization.LocalizationResources.Sunday
+                };
+                Days = _days;
+            }
+
+            if (_weeks == null)
+            {
+                _weeks = new List<string>{
+                    Localization.LocalizationResources.EveryWeek,
+                    Localization.LocalizationResources.WeekA,
+                    Localization.LocalizationResources.WeekB
+                };
+                Weeks = _weeks;
+            }
         }
 
         public override async void OnNavigatingTo(NavigationParameters parameters)
@@ -170,17 +209,19 @@ namespace StudyApp.ViewModels
             }
             SelectedSubjectIndex = 0;
 
-            Title = "Class";
+            Title = Localization.LocalizationResources.Class;
             DeleteVisible = false;
             ClassRepeats = true;
             ClassStartDate = DateTime.Today;
             ClassEndDate = DateTime.Today;
             ClassDuration = 120;
             ClassDay = DateHelper.GetDayOfWeek();
-            _ID = parameters.GetValue<int>("ID");
+            ClassWeek = 0;
 
             if (parameters.GetValue<string>("Type") != "Class")
                 return;
+
+            _ID = parameters.GetValue<int>("ID");
 
             try
             {

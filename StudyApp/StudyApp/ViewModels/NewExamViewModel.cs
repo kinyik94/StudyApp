@@ -107,7 +107,7 @@ namespace StudyApp.ViewModels
         public NewExamViewModel(INavigationService navigationService)
             : base(navigationService)
         {
-            Title = "Exam";
+            Title = Localization.LocalizationResources.Exam;
 
             FABCommand = new DelegateCommand(ExecuteFABCommand);
             DeleteCommand = new DelegateCommand(ExecuteDeleteCommand);
@@ -126,15 +126,15 @@ namespace StudyApp.ViewModels
             }
             SelectedSubjectIndex = 0;
 
-            Title = "Exam";
+            Title = Localization.LocalizationResources.Exam;
             DeleteVisible = false;
             ExamDate = DateTime.Today;
             ExamDuration = 120;
 
-            _ID = parameters.GetValue<int>("ID");
-
             if (parameters.GetValue<string>("Type") != "Exam")
                 return;
+
+            _ID = parameters.GetValue<int>("ID");
 
             try
             {

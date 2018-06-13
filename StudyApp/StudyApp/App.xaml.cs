@@ -6,6 +6,8 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Prism.DryIoc;
 using DryIoc;
+using System.Globalization;
+using System;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace StudyApp
@@ -33,6 +35,22 @@ namespace StudyApp
         protected override async void OnInitialized()
         {
             InitializeComponent();
+
+            var LanguageCode = "en";
+            var platformCultureString = CultureInfo.CurrentCulture.ToString();
+            var PlatformString = platformCultureString.Replace("_", "-"); // .NET expects dash, not underscore
+            var dashIndex = PlatformString.IndexOf("-", StringComparison.Ordinal);
+            if (dashIndex > 0)
+            {
+                var parts = PlatformString.Split('-');
+                LanguageCode = parts[0];
+            }
+            else
+            {
+                LanguageCode = PlatformString;
+            }
+
+            Localization.LocalizationResources.Culture = new CultureInfo(LanguageCode);
 
             await NavigationService.NavigateAsync("MenuPage/Navigation/Dashboard");
         }

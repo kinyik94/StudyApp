@@ -13,17 +13,18 @@ namespace StudyApp.ViewModels
 {
     public class ItemsViewModel : ViewModelBase
     {
+        private string Type;
         public DelegateCommand FABCommand { get; }
         private async void ExecuteFABCommand()
         {
-            string type = Title.Substring(0, (Title == "Classes" ? 5 : 4));
+            string type = Type.Substring(0, (Type == "Classes" ? 5 : 4));
             await NavigationService.NavigateAsync("NewItem?Type=" + type);
         }
 
         public DelegateCommand<string> ItemSelectCommand { get; }
         private async void ExecuteItemSelectCommand(string id)
         {
-            string type = Title.Substring(0, (Title == "Classes" ? 5 : 4));
+            string type = Type.Substring(0, (Type == "Classes" ? 5 : 4));
             await NavigationService.NavigateAsync("NewItem?Type=" + type + "&ID=" + id);
         }
 
@@ -38,7 +39,8 @@ namespace StudyApp.ViewModels
         public ItemsViewModel(INavigationService navigationService)
             : base(navigationService)
         {
-            Title = "Items";
+            Type = "Items";
+            Title = Localization.LocalizationResources.Items;
             Items = new ObservableCollection<ItemModelInterface>();
 
             FABCommand = new DelegateCommand(ExecuteFABCommand);
@@ -47,12 +49,13 @@ namespace StudyApp.ViewModels
 
         public override async void OnNavigatedTo(NavigationParameters parameters)
         {
-            string type = parameters.GetValue<string>("Type");
-            Title = type ?? "Tasks";
+            Type = parameters.GetValue<string>("Type");
+            Type = Type ?? "Tasks";
+            Title = Localization.LocalizationResources.ResourceManager.GetString(Type);
             Items.Clear();
             try
             {
-                switch (type)
+                switch (Type)
                 {
                     case "Classes":
                         Items = new ObservableCollection<ItemModelInterface>(await ClassModel.GetAllClass());

@@ -19,7 +19,9 @@ namespace StudyApp.Views
         async void OnSemesterMenuClicked(object sender, EventArgs args)
         {
             var vm = ((SubjectsViewModel)BindingContext);
-            string action = await DisplayActionSheet("", "Cancel", null, "Edit Semester", "New Semester");
+            string action = await DisplayActionSheet("", Localization.LocalizationResources.Cancel, null,
+                Localization.LocalizationResources.EditSemester,
+                Localization.LocalizationResources.NewSemester);
 
             if (action != "Cancel" && vm.MenuCommand.CanExecute(action))
                 vm.MenuCommand.Execute(action);

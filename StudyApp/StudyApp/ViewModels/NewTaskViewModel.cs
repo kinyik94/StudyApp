@@ -92,7 +92,7 @@ namespace StudyApp.ViewModels
         public NewTaskViewModel(INavigationService navigationService)
             : base(navigationService)
         {
-            Title = "Task";
+            Title = Localization.LocalizationResources.Task;
 
             FABCommand = new DelegateCommand(ExecuteFABCommand);
             DeleteCommand = new DelegateCommand(ExecuteDeleteCommand);
@@ -111,13 +111,14 @@ namespace StudyApp.ViewModels
             }
             SelectedSubjectIndex = 0;
 
-            Title = "Task";
+            Title = Localization.LocalizationResources.Task;
             DeleteVisible = false;
             TaskDueDate = DateTime.Today;
-            _ID = parameters.GetValue<int>("ID");
 
             if (parameters.GetValue<string>("Type") != "Task")
                 return;
+
+            _ID = parameters.GetValue<int>("ID");
 
             try
             {

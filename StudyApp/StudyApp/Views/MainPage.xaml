@@ -51,31 +51,6 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <!--<Label Text="Exams" />
-            <ListView x:Name="ExamList"
-                       ItemsSource="{Binding Exams}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <Label Font="Large" Text="{Binding DisplayString}" />
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-
-
-            <Label Text="Classes" />
-            <ListView x:Name="ClassList"
-                       ItemsSource="{Binding Classes}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <Label Font="Large" Text="{Binding DisplayString}" />
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>-->
-
         <Image Source="Images/icon_plus.png" AbsoluteLayout.LayoutBounds="1, 1, 100, 100" Margin="20"
 				AbsoluteLayout.LayoutFlags="PositionProportional">
             <Image.GestureRecognizers>
