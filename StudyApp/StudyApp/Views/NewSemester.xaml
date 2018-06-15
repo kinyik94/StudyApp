@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              xmlns:i18n="clr-namespace:StudyApp.Localization;assembly=StudyApp"
+             xmlns:local="clr-namespace:StudyApp.CustomControls;assembly=StudyApp"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="StudyApp.Views.NewSemester"
              Title="{Binding Title}">
@@ -17,12 +18,8 @@
             <Label Text="{i18n:Translate SemesterEnd}" Margin="10,20,10,0" />
             <DatePicker Margin="10,0,10,0" HorizontalOptions="Start" Date="{Binding EndDate}" />
         </StackLayout>
-        <Image Source="Images/icon_ok.png" AbsoluteLayout.LayoutBounds="1, 1, 100, 100" Margin="20"
-				AbsoluteLayout.LayoutFlags="PositionProportional">
-            <Image.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding FABCommand}" />
-            </Image.GestureRecognizers>
-        </Image>
+        <local:FloatingActionButton Icon="icon_ok" AbsoluteLayout.LayoutBounds="1, 1, 100, 100" Margin="20"
+				AbsoluteLayout.LayoutFlags="PositionProportional" Command="{Binding FABCommand}"></local:FloatingActionButton>
     </AbsoluteLayout>
   
 </ContentPage>

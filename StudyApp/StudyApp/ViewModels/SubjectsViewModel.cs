@@ -45,7 +45,7 @@ namespace StudyApp.ViewModels
 
         private async void ExecuteSemesterChangedCommand()
         {
-            if (SelectedSemesterIndex >= 0)
+            if (SelectedSemesterIndex >= 0 && Semesters.Count != 0)
             {
                 int sID = Semesters[SelectedSemesterIndex].ID;
                 try

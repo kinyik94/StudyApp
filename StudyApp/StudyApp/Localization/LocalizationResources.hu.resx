@@ -242,7 +242,7 @@
   <data name="Name" xml:space="preserve">
     <value>Név</value>
   </data>
-  <data name="New SemesterName" xml:space="preserve">
+  <data name="NewSemesterName" xml:space="preserve">
     <value>Új szemeszter neve</value>
   </data>
   <data name="NewSubjectName" xml:space="preserve">

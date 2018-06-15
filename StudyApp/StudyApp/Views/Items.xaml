@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:StudyApp.CustomControls;assembly=StudyApp"
              x:Class="StudyApp.Views.Items"
              Title="{Binding Title}">
 
@@ -41,11 +42,7 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <Image Source="Images/icon_plus.png" AbsoluteLayout.LayoutBounds="1, 1, 100, 100" Margin="20"
-				AbsoluteLayout.LayoutFlags="PositionProportional">
-            <Image.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding FABCommand}" />
-            </Image.GestureRecognizers>
-        </Image>
+        <local:FloatingActionButton Icon="icon_plus" AbsoluteLayout.LayoutBounds="1, 1, 100, 100" Margin="20"
+				AbsoluteLayout.LayoutFlags="PositionProportional" Command="{Binding FABCommand}"></local:FloatingActionButton>
     </AbsoluteLayout>
 </ContentPage>

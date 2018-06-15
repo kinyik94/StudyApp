@@ -4,6 +4,7 @@
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              xmlns:i18n="clr-namespace:StudyApp.Localization;assembly=StudyApp"
              xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+             xmlns:local="clr-namespace:StudyApp.CustomControls;assembly=StudyApp"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="StudyApp.Views.Subjects"
              Title="{Binding Title}">
@@ -37,7 +38,7 @@
                     </behaviors:EventHandlerBehavior>
                 </Picker.Behaviors>
             </Picker>
-            
+
             <ListView x:Name="SubjectList"
                       ItemTapped="OnSubjectTapped"
                       ItemsSource="{Binding Subjects}">
@@ -49,13 +50,10 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+            
         </StackLayout>
-        <Image Source="Images/icon_plus.png" AbsoluteLayout.LayoutBounds="1, 1, 100, 100" Margin="20"
-				AbsoluteLayout.LayoutFlags="PositionProportional">
-            <Image.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding FABCommand}" />
-            </Image.GestureRecognizers>
-        </Image>
+        <local:FloatingActionButton Icon="icon_plus" AbsoluteLayout.LayoutBounds="1, 1, 100, 100" Margin="20"
+				AbsoluteLayout.LayoutFlags="PositionProportional" Command="{Binding FABCommand}"></local:FloatingActionButton>
     </AbsoluteLayout>
 
 </ContentPage>

@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:local="clr-namespace:StudyApp.CustomControls;assembly=StudyApp"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="StudyApp.Views.MainPage"
              Title="{Binding Title}">
@@ -50,12 +51,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-
-        <Image Source="Images/icon_plus.png" AbsoluteLayout.LayoutBounds="1, 1, 100, 100" Margin="20"
-				AbsoluteLayout.LayoutFlags="PositionProportional">
-            <Image.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding FABCommand}" />
-            </Image.GestureRecognizers>
-        </Image>
+        <local:FloatingActionButton Icon="icon_plus" AbsoluteLayout.LayoutBounds="1, 1, 100, 100" Margin="20"
+				AbsoluteLayout.LayoutFlags="PositionProportional" Command="{Binding FABCommand}"></local:FloatingActionButton>
     </AbsoluteLayout>
 </ContentPage>
