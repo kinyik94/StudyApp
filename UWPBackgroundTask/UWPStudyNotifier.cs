@@ -1,5 +1,5 @@
 ﻿using Microsoft.Toolkit.Uwp.Notifications;
-using StudyApp.Notification;
+using StudyApp.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;

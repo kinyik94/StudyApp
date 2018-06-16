@@ -115,6 +115,15 @@ namespace StudyApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Continue as general user.
+        /// </summary>
+        public static string ContinueGeneral {
+            get {
+                return ResourceManager.GetString("ContinueGeneral", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dashboard.
         /// </summary>
         public static string Dashboard {
@@ -255,6 +264,15 @@ namespace StudyApp.Localization {
         public static string Location {
             get {
                 return ResourceManager.GetString("Location", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login with facebook.
+        /// </summary>
+        public static string LoginFacebook {
+            get {
+                return ResourceManager.GetString("LoginFacebook", resourceCulture);
             }
         }
         

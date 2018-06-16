@@ -10,7 +10,7 @@ using Android.Views;
 using Android.Widget;
 using StudyApp.Droid;
 
-namespace StudyApp.Notification
+namespace StudyApp.Services
 {
     class AndroidStudyNotifier : IStudyNotifier
     {

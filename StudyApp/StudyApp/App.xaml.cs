@@ -52,7 +52,8 @@ namespace StudyApp
 
             Localization.LocalizationResources.Culture = new CultureInfo(LanguageCode);
 
-            await NavigationService.NavigateAsync("MenuPage/Navigation/Dashboard");
+            //await NavigationService.NavigateAsync("MenuPage/Navigation/Dashboard");
+            await NavigationService.NavigateAsync("StartPage");
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
@@ -68,6 +69,8 @@ namespace StudyApp
             containerRegistry.RegisterForNavigation<NewTask>();
             containerRegistry.RegisterForNavigation<NewExam>();
             containerRegistry.RegisterForNavigation<NewSemester>();
+            containerRegistry.RegisterForNavigation<LoginPage>();
+            containerRegistry.RegisterForNavigation<StartPage>();
         }
     }
 }

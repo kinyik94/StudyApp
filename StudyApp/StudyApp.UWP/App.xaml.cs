@@ -1,6 +1,6 @@
 ﻿using DryIoc;
 using Microsoft.Toolkit.Uwp.Notifications;
-using StudyApp.Notification;
+using StudyApp.Services;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -113,7 +113,8 @@ namespace StudyApp.UWP
 
             Container c = StudyApp.App.Dic;
             c.Register<IStudyNotifier, UWPStudyNotifier>(Reuse.Singleton);
-            
+            c.Register<IFacebookAuthenticator, UWPFacebookAuthenticator>(Reuse.Singleton);
+
             var notifier = c.Resolve<IStudyNotifier>();
             if (notifier != null)
             {

@@ -1,5 +1,4 @@
 ﻿using Microsoft.Toolkit.Uwp.Notifications;
-using StudyApp.Notification;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Notifications;
 
-namespace StudyApp.Notification
+namespace StudyApp.Services
 {
     class UWPStudyNotifier : IStudyNotifier
     {

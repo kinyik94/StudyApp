@@ -6,7 +6,7 @@ using DryIoc;
 using Prism;
 using Prism.Ioc;
 using StudyApp.Droid.Services;
-using StudyApp.Notification;
+using StudyApp.Services;
 
 namespace StudyApp.Droid
 {
@@ -22,6 +22,7 @@ namespace StudyApp.Droid
 
             Container c = StudyApp.App.Dic;
             c.Register<IStudyNotifier, AndroidStudyNotifier>(Reuse.Singleton);
+            c.Register<IFacebookAuthenticator, AndroidFacebookAuthenticator>(Reuse.Singleton);
 
             Intent intent = new Intent("StartStudyService");
             SendBroadcast(intent);

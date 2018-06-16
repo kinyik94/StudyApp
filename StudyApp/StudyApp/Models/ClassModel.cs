@@ -22,7 +22,6 @@ namespace StudyApp.Models
 
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-
         public int subjectID { get; set; }
 
         private string _subjectName;

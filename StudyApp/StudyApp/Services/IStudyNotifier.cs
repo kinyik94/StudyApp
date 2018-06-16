@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StudyApp.Notification
+namespace StudyApp.Services
 {
     public abstract class IStudyNotifier
     {

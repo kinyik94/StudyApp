@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-<data name="Class" xml:space="preserve">
+  <data name="Class" xml:space="preserve">
     <value>Class</value>
   </data>
   <data name="ClassEnd" xml:space="preserve">
@@ -277,5 +277,11 @@
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>
+  </data>
+  <data name="ContinueGeneral" xml:space="preserve">
+    <value>Continue as general user</value>
+  </data>
+  <data name="LoginFacebook" xml:space="preserve">
+    <value>Login with facebook</value>
   </data>
 </root>

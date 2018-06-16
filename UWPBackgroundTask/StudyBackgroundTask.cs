@@ -11,7 +11,7 @@ using Windows.ApplicationModel.Background;
 using StudyApp.Models;
 using StudyApp.Helper;
 using DryIoc;
-using StudyApp.Notification;
+using StudyApp.Services;
 
 namespace UWPBackgroundTask
 {

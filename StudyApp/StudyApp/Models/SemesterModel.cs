@@ -12,6 +12,7 @@ namespace StudyApp.Models
         [PrimaryKey, AutoIncrement]
         public int ID { get; set; }
         public string Name { get; set; }
+        public string UserId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public static async Task<List<SemesterModel>> GetItemsAsync()

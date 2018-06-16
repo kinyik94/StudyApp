@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:i18n="clr-namespace:StudyApp.Localization;assembly=StudyApp"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="StudyApp.Views.StartPage">
+    <StackLayout Padding="0, 20, 0, 0">
+        <Image
+            Source="Images/icon_main.png"
+            HorizontalOptions="Start"
+            VerticalOptions="Center"
+            />
+        <Button Text="{i18n:Translate LoginFacebook}" BackgroundColor="Blue" Command="{Binding LoginCommand}" />
+        <Button Text="{i18n:Translate ContinueGeneral}" Command="{Binding GeneralCommand}" />
+
+        <Label Text="{Binding Email}" />
+    </StackLayout>
+</ContentPage>
