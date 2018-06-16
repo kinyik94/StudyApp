@@ -28,6 +28,11 @@ namespace StudyApp.ViewModels
                     await NavigationService.GoBackAsync();
                 }
             }
+            else
+            {
+                _ID = 0;
+                await NavigationService.GoBackAsync();
+            }
         }
 
         private int _ID;

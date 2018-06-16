@@ -16,6 +16,8 @@ namespace StudyApp
     {
 
         public static Container _dic = null;
+        
+        public static string UserId { get; set; }
 
         public static Container Dic 
         {
@@ -52,7 +54,8 @@ namespace StudyApp
 
             Localization.LocalizationResources.Culture = new CultureInfo(LanguageCode);
 
-            //await NavigationService.NavigateAsync("MenuPage/Navigation/Dashboard");
+            UserId = "0";
+
             await NavigationService.NavigateAsync("StartPage");
         }
 
@@ -69,7 +72,6 @@ namespace StudyApp
             containerRegistry.RegisterForNavigation<NewTask>();
             containerRegistry.RegisterForNavigation<NewExam>();
             containerRegistry.RegisterForNavigation<NewSemester>();
-            containerRegistry.RegisterForNavigation<LoginPage>();
             containerRegistry.RegisterForNavigation<StartPage>();
         }
     }

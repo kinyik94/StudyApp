@@ -17,6 +17,8 @@ namespace StudyApp.Models
         public string Summary { get; set; }
         public int subjectID { get; set; }
 
+        public string UserId { get; set; }
+
         private string _subjectName;
         [Ignore]
         public string SubjectName
@@ -26,11 +28,11 @@ namespace StudyApp.Models
 
         public static async Task<List<TaskModel>> GetAllTask()
         {
-            List<TaskModel> tasks = await StudyAppDatabase.Get().database.Table<TaskModel>().OrderBy(s => s.DueDate).ToListAsync();
+            List<TaskModel> tasks = await StudyAppDatabase.Get().database.Table<TaskModel>().Where(t => t.UserId == App.UserId).OrderBy(t => t.DueDate).ToListAsync();
             for (int i = tasks.Count - 1; i >= 0; --i)
             {
                 var task = tasks[i];
-                SubjectModel subj = await StudyAppDatabase.Get().database.Table<SubjectModel>().Where(s => s.ID == task.subjectID).FirstOrDefaultAsync();
+                SubjectModel subj = await StudyAppDatabase.Get().database.Table<SubjectModel>().Where(t => t.ID == task.subjectID && t.UserId == App.UserId).FirstOrDefaultAsync();
                 if (subj != null && subj.Name != null)
                     task._subjectName = subj.Name;
                 else
@@ -45,11 +47,11 @@ namespace StudyApp.Models
 
         public static async Task<List<TaskModel>> GetItemsAsync(List<DateTime> dates)
         {
-            List<TaskModel> tasks = await StudyAppDatabase.Get().database.Table<TaskModel>().Where(s => dates.Contains(s.DueDate)).OrderBy(s => s.DueDate).ToListAsync();
+            List<TaskModel> tasks = await StudyAppDatabase.Get().database.Table<TaskModel>().Where(t => t.UserId == App.UserId && dates.Contains(t.DueDate)).OrderBy(t => t.DueDate).ToListAsync();
             for (int i = tasks.Count - 1; i >= 0; --i)
             {
                 var task = tasks[i];
-                SubjectModel subj = await StudyAppDatabase.Get().database.Table<SubjectModel>().Where(s => s.ID == task.subjectID).FirstOrDefaultAsync();
+                SubjectModel subj = await StudyAppDatabase.Get().database.Table<SubjectModel>().Where(s => s.UserId == App.UserId && s.ID == task.subjectID).FirstOrDefaultAsync();
                 if (subj != null && subj.Name != null)
                     task._subjectName = subj.Name;
                 else
@@ -64,7 +66,7 @@ namespace StudyApp.Models
 
         public static async Task<TaskModel> GetItemByIDAsync(int ID)
         {
-            TaskModel task = await StudyAppDatabase.Get().database.Table<TaskModel>().Where(t => t.ID == ID).FirstOrDefaultAsync();
+            TaskModel task = await StudyAppDatabase.Get().database.Table<TaskModel>().Where(t => t.ID == ID && t.UserId == App.UserId).FirstOrDefaultAsync();
             if (task != null)
             {
                 SubjectModel subj = await StudyAppDatabase.Get().database.Table<SubjectModel>().Where(s => s.ID == task.subjectID).FirstOrDefaultAsync();
@@ -78,6 +80,7 @@ namespace StudyApp.Models
         public static async Task<int> SaveItemAsync(TaskModel item)
         {
             var db = StudyAppDatabase.Get().database;
+            item.UserId = App.UserId;
             if (item.ID > 0)
             {
                 return await db.UpdateAsync(item);

@@ -25,7 +25,7 @@ namespace StudyApp.ViewModels
         public DelegateCommand FABCommand { get; }
         private async void ExecuteFABCommand()
         {
-            if (Subjects == null || SelectedSubjectIndex < 0)
+            if (Subjects == null || Subjects.Count == 0 || SelectedSubjectIndex < 0)
             {
                 _ID = 0;
                 await NavigationService.GoBackAsync(new NavigationParameters("Type=Tasks"));

@@ -10,6 +10,7 @@
     <MasterDetailPage.Master>
         <ContentPage Title="Menu">
             <StackLayout Padding="20">
+                <Label Text="{Binding UserName}" FontSize="Large" HorizontalOptions="Center" Margin="0, 0, 0, 40" />
                 <Grid>
                     <Grid.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding NavigateCommand}" CommandParameter="Navigation/Dashboard"/>

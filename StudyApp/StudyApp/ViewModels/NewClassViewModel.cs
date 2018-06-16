@@ -16,8 +16,6 @@ namespace StudyApp.ViewModels
     {
         private int _ID;
 
-
-
         private static List<string> _days;
         public List<string> Days {
             get { return _days; }

@@ -14,24 +14,27 @@ namespace StudyApp.Models
         public string Name { get; set; }
         public int semesterID { get; set; }
 
+        public string UserId { get; set; }
+
         public static async Task<List<SubjectModel>> GetItemsAsync(int SemesterID)
         {
-            return await StudyAppDatabase.Get().database.Table<SubjectModel>().Where(s => s.semesterID == SemesterID).OrderBy(s => s.Name).ToListAsync();
+            return await StudyAppDatabase.Get().database.Table<SubjectModel>().Where(s => s.semesterID == SemesterID && s.UserId == App.UserId).OrderBy(s => s.Name).ToListAsync();
         }
 
         public static async Task<List<SubjectModel>> GetAllItemsAsync()
         {
-            return await StudyAppDatabase.Get().database.Table<SubjectModel>().OrderBy(s => s.Name).ToListAsync();
+            return await StudyAppDatabase.Get().database.Table<SubjectModel>().Where(s => s.UserId == App.UserId).OrderBy(s => s.Name).ToListAsync();
         }
 
         public static async Task<SubjectModel> GetItemByIDAsync(int ID)
         {
-            return await StudyAppDatabase.Get().database.Table<SubjectModel>().Where(t => t.ID == ID).FirstOrDefaultAsync();
+            return await StudyAppDatabase.Get().database.Table<SubjectModel>().Where(s => s.ID == ID && s.UserId == App.UserId).FirstOrDefaultAsync();
         }
 
         public static async Task<int> SaveItemAsync(SubjectModel item)
         {
             var db = StudyAppDatabase.Get().database;
+            item.UserId = App.UserId;
             if (item.ID > 0)
             {
                 return await db.UpdateAsync(item);

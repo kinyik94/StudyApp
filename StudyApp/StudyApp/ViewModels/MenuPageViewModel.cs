@@ -9,10 +9,19 @@ namespace StudyApp.ViewModels
 {
     public class MenuPageViewModel : ViewModelBase
     {
+
+        private string _userName;
+        public string UserName
+        {
+            get { return _userName; }
+            set { SetProperty(ref _userName, value); }
+        }
+
         private string _currentDetailPage;
 
         private string _dashboardColor;
-        public string DashboardColor {
+        public string DashboardColor
+        {
             get { return _dashboardColor; }
             set { SetProperty(ref _dashboardColor, value); }
         }
@@ -126,11 +135,23 @@ namespace StudyApp.ViewModels
             await NavigationService.NavigateAsync(path);
         }
 
+        public override void OnNavigatedTo(NavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
+
+            var name = parameters.GetValue<string>("name");
+
+            if (name != null)
+                UserName = name;
+        }
+
         public MenuPageViewModel(INavigationService navigationService)
             : base(navigationService)
         {
             Title = Localization.LocalizationResources.ResourceManager.GetString("HomePage");
             _currentDetailPage = "Dashboard";
+
+            UserName = "General User";
 
             ExamsColor = "Black";
             ClassesColor = "Black";

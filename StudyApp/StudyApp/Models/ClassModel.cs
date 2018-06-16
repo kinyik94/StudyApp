@@ -24,6 +24,8 @@ namespace StudyApp.Models
         public DateTime EndDate { get; set; }
         public int subjectID { get; set; }
 
+        public string UserId { get; set; }
+
         private string _subjectName;
         [Ignore]
         public string SubjectName
@@ -33,11 +35,11 @@ namespace StudyApp.Models
 
         public static async Task<List<ClassModel>> GetAllClass()
         {
-            List<ClassModel> classes = await StudyAppDatabase.Get().database.Table<ClassModel>().ToListAsync();
+            List<ClassModel> classes = await StudyAppDatabase.Get().database.Table<ClassModel>().Where(c => c.UserId == App.UserId).ToListAsync();
             for (int i = classes.Count - 1; i >= 0; --i)
             {
                 var c = classes[i];
-                SubjectModel subj = await StudyAppDatabase.Get().database.Table<SubjectModel>().Where(s => s.ID == c.subjectID).FirstOrDefaultAsync();
+                SubjectModel subj = await StudyAppDatabase.Get().database.Table<SubjectModel>().Where(s => s.ID == c.subjectID && s.UserId == App.UserId).FirstOrDefaultAsync();
                 if (subj != null && subj.Name != null)
                     c._subjectName = subj.Name;
                 else
@@ -59,8 +61,10 @@ namespace StudyApp.Models
 
                 List<ClassModel> classes = await StudyAppDatabase.Get().database.Table<ClassModel>()
                 .Where(c => (
-                            ((c.Repeats && c.Day == day && (c.Week == week || c.Week == 0) && c.StartDate <= now && c.EndDate >= now) ||
-                            (!c.Repeats && c.StartDate == now)) && (nextTime <= c.StartTime) && (c.StartTime < nextEndTime)
+                            (c.UserId == App.UserId) && (
+                                (c.Repeats && c.Day == day && (c.Week == week || c.Week == 0) && c.StartDate <= now && c.EndDate >= now) ||
+                                (!c.Repeats && c.StartDate == now)
+                            ) && (nextTime <= c.StartTime) && (c.StartTime < nextEndTime)
                       ))
                 .ToListAsync();
                 for (int i = classes.Count - 1; i >= 0; --i)
@@ -89,14 +93,16 @@ namespace StudyApp.Models
         {
             List<ClassModel> classes = await StudyAppDatabase.Get().database.Table<ClassModel>()
                 .Where(c => (
-                            (c.Repeats && c.Day == day && (c.Week == week || c.Week == 0) && c.StartDate <= now && c.EndDate >= now) || 
-                            (!c.Repeats && c.StartDate == now)
+                            (c.UserId == App.UserId) && (
+                                (c.Repeats && c.Day == day && (c.Week == week || c.Week == 0) && c.StartDate <= now && c.EndDate >= now) ||
+                                (!c.Repeats && c.StartDate == now)
+                            )
                       ))
                 .OrderBy(c => c.StartTime).ToListAsync();
             for(int i = classes.Count - 1; i >= 0; --i)
             {
                 var c = classes[i];
-                SubjectModel subj = await StudyAppDatabase.Get().database.Table<SubjectModel>().Where(s => s.ID == c.subjectID).FirstOrDefaultAsync();
+                SubjectModel subj = await StudyAppDatabase.Get().database.Table<SubjectModel>().Where(s => s.UserId == App.UserId && s.ID == c.subjectID).FirstOrDefaultAsync();
                 if (subj != null && subj.Name != null)
                     c._subjectName = subj.Name;
                 else
@@ -110,10 +116,10 @@ namespace StudyApp.Models
 
         public static async Task<ClassModel> GetItemByIDAsync(int ID)
         {
-            ClassModel c = await StudyAppDatabase.Get().database.Table<ClassModel>().Where(t => t.ID == ID).FirstOrDefaultAsync();
+            ClassModel c = await StudyAppDatabase.Get().database.Table<ClassModel>().Where(k => k.UserId == App.UserId && k.ID == ID).FirstOrDefaultAsync();
             if (c != null)
             {
-                SubjectModel subj = await StudyAppDatabase.Get().database.Table<SubjectModel>().Where(s => s.ID == c.subjectID).FirstOrDefaultAsync();
+                SubjectModel subj = await StudyAppDatabase.Get().database.Table<SubjectModel>().Where(s => s.UserId == App.UserId && s.ID == c.subjectID).FirstOrDefaultAsync();
                 if (subj == null || subj.Name == null)
                     return null;
                 c._subjectName = subj.Name;
@@ -124,6 +130,7 @@ namespace StudyApp.Models
         public static async Task<int> SaveItemAsync(ClassModel item)
         {
             var db = StudyAppDatabase.Get().database;
+            item.UserId = App.UserId;
             if (item.ID > 0)
             {
                 return await db.UpdateAsync(item);

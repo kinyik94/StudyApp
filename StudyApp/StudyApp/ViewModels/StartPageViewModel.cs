@@ -22,11 +22,14 @@ namespace StudyApp.ViewModels
         private async void ExecuteLoginCommand()
         {
             var auth = App.Dic.Resolve<IFacebookAuthenticator>();
-            await auth.Authenticate(async (string id) =>
+            await auth.Authenticate(async (string json) =>
             {
                 try
                 {
-                    await NavigationService.NavigateAsync("/MenuPage/Navigation/Dashboard");
+                    var obj = JsonValue.Parse(json);
+                    string id = obj["id"];
+                    string name = obj["name"];
+                    await NavigationService.NavigateAsync("/MenuPage?name=" + name + "/Navigation/Dashboard?id=" + id);
                 }
                 catch{}
             });

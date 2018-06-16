@@ -8,7 +8,7 @@
     <StackLayout Padding="0, 20, 0, 0">
         <Image
             Source="Images/icon_main.png"
-            HorizontalOptions="Start"
+            HorizontalOptions="Center"
             VerticalOptions="Center"
             />
         <Button Text="{i18n:Translate LoginFacebook}" BackgroundColor="Blue" Command="{Binding LoginCommand}" />

@@ -16,6 +16,8 @@ namespace StudyApp.ViewModels
     public class MainPageViewModel : ViewModelBase
     {
 
+        private Dictionary<string, string> groupNamesToType;
+
         public class ItemCollection : ObservableCollection<ItemModelInterface>
         {
             public ItemCollection(string _name) : base()
@@ -40,7 +42,9 @@ namespace StudyApp.ViewModels
         {
             if (parameters.Length != 2 || parameters[0] == null || parameters[1] == null)
                 return;
-            string type = parameters[1].Substring(0, (parameters[1] == "Classes" ? 5 : 4));
+            string type = parameters[1];
+            type = groupNamesToType[type];
+            type = type.Substring(0, (type == "Classes" ? 5 : 4));
             await NavigationService.NavigateAsync("NewItem?Type=" + type + "&ID=" + parameters[0]);
         }
 
@@ -59,10 +63,19 @@ namespace StudyApp.ViewModels
             ItemSelectCommand = new DelegateCommand<string[]>(ExecuteItemSelectCommand);
 
             Items = new ObservableCollection<ItemCollection>();
+
+            groupNamesToType = new Dictionary<string, string>();
         }
 
         public override async void OnNavigatedTo(NavigationParameters parameters)
         {
+
+            string id = parameters.GetValue<string>("id");
+            if (id != null)
+            {
+                App.UserId = id;
+            }
+
             Items.Clear();
 
             List<DateTime> dates = new List<DateTime>();
@@ -81,6 +94,7 @@ namespace StudyApp.ViewModels
             {
                 Tasks = new ItemCollection(Localization.LocalizationResources.Tasks);
             }
+            groupNamesToType[Localization.LocalizationResources.Tasks] =  "Tasks";
             try
             {
                 Classes = new ItemCollection(Localization.LocalizationResources.Classes, new List<ItemModelInterface>(await ClassModel.GetItemsAsync(DateTime.Today, DateHelper.GetDayOfWeek(), await DateHelper.GetWeek())));
@@ -89,6 +103,7 @@ namespace StudyApp.ViewModels
             {
                 Classes = new ItemCollection(Localization.LocalizationResources.Classes);
             }
+            groupNamesToType[Localization.LocalizationResources.Classes] =  "Classes";
             try
             {
                 Exams = new ItemCollection(Localization.LocalizationResources.Exams, new List<ItemModelInterface>(await ExamModel.GetItemsAsync(dates)));
@@ -97,7 +112,7 @@ namespace StudyApp.ViewModels
             {
                 Exams = new ItemCollection(Localization.LocalizationResources.Exams);
             }
-
+            groupNamesToType[Localization.LocalizationResources.Exams] = "Exams";
             Items.Add(Exams);
             Items.Add(Classes);
             Items.Add(Tasks);
