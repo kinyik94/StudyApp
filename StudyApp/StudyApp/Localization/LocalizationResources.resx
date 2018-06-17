@@ -284,4 +284,10 @@
   <data name="LoginFacebook" xml:space="preserve">
     <value>Login with facebook</value>
   </data>
+  <data name="SignOut" xml:space="preserve">
+    <value>Sign Out</value>
+  </data>
+  <data name="GeneralUser" xml:space="preserve">
+    <value>GeneralUser</value>
+  </data>
 </root>

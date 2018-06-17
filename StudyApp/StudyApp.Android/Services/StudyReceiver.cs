@@ -23,6 +23,7 @@ namespace StudyApp.Droid.Services
     [IntentFilter(new[] { Android.Content.Intent.ActionBootCompleted })]
     [IntentFilter(new[] { Android.Content.Intent.ActionUserPresent })]
     [IntentFilter(new[] { "StartStudyService" })]
+    [IntentFilter(new[] { "StopStudyService" })]
     [IntentFilter(new[] { "StudyNotify" })]
     class StudyReceiver : BroadcastReceiver
     {
@@ -35,6 +36,15 @@ namespace StudyApp.Droid.Services
 
         public async override void OnReceive(Context context, Intent intent)
         {
+            if (intent.Action == "StopStudyService")
+            {
+                AlarmManager cam = (AlarmManager)context.GetSystemService(Context.AlarmService);
+                Intent ci = new Intent("StudyNotify");
+                PendingIntent cpi = PendingIntent.GetBroadcast(context, 0, ci, 0);
+                cam.Cancel(cpi);
+                return;
+            }
+
             if (notifier == null)
             {
                 Container c = StudyApp.App.Dic;

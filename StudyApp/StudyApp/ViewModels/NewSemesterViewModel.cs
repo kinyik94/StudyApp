@@ -70,8 +70,10 @@ namespace StudyApp.ViewModels
             EndDate = DateTime.Today;
             if (Action == Localization.LocalizationResources.EditSemester)
             {
-                Title = Title = Localization.LocalizationResources.EditSemester;
+                Title = Localization.LocalizationResources.EditSemester;
                 _ID = parameters.GetValue<int>("ID");
+                if (_ID == 0)
+                    await NavigationService.GoBackAsync();
                 try
                 {
                     SemesterModel sem = await SemesterModel.GetItemByIDAsync(_ID);

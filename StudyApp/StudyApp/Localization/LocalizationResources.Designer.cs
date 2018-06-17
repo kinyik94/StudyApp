@@ -241,6 +241,15 @@ namespace StudyApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to GeneralUser.
+        /// </summary>
+        public static string GeneralUser {
+            get {
+                return ResourceManager.GetString("GeneralUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Home Page.
         /// </summary>
         public static string HomePage {
@@ -390,6 +399,15 @@ namespace StudyApp.Localization {
         public static string SemesterStart {
             get {
                 return ResourceManager.GetString("SemesterStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sign Out.
+        /// </summary>
+        public static string SignOut {
+            get {
+                return ResourceManager.GetString("SignOut", resourceCulture);
             }
         }
         

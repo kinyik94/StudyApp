@@ -284,4 +284,10 @@
   <data name="LoginFacebook" xml:space="preserve">
     <value>Bejelentkezés Facebook fiókkal</value>
   </data>
+  <data name="SignOut" xml:space="preserve">
+    <value>Kijelentkezés</value>
+  </data>
+  <data name="GeneralUser" xml:space="preserve">
+    <value>Általános felhasználó</value>
+  </data>
 </root>

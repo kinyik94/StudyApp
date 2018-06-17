@@ -12,43 +12,62 @@ namespace StudyApp.ViewModels
 {
 	public class StartPageViewModel : ViewModelBase
 	{
+        private bool _inLogin = false;
         public DelegateCommand GeneralCommand { get; }
         private async void ExecuteGeneralCommand()
         {
-            await NavigationService.NavigateAsync("/MenuPage/Navigation/Dashboard");
+            if (!_inLogin)
+            {
+                await NavigationService.NavigateAsync("/MenuPage/Navigation/Dashboard");
+                try
+                {
+                    App.Dic.Resolve<IStudyNotifier>().StartNotify();
+                }
+                catch { }
+            }
         }
 
         public DelegateCommand LoginCommand { get; }
         private async void ExecuteLoginCommand()
         {
-            var auth = App.Dic.Resolve<IFacebookAuthenticator>();
-            await auth.Authenticate(async (string json) =>
+            if (!_inLogin)
             {
-                try
+                _inLogin = true;
+                var auth = App.Dic.Resolve<IFacebookAuthenticator>();
+                await auth.Authenticate(async (string json) =>
                 {
-                    var obj = JsonValue.Parse(json);
-                    string id = obj["id"];
-                    string name = obj["name"];
-                    await NavigationService.NavigateAsync("/MenuPage?name=" + name + "/Navigation/Dashboard?id=" + id);
-                }
-                catch{}
-            });
+                    try
+                    {
+                        var obj = JsonValue.Parse(json);
+                        string id = obj["id"];
+                        string name = obj["name"];
+                        _inLogin = false;
+                        await NavigationService.NavigateAsync("/MenuPage?name=" + name + "/Navigation/Dashboard?id=" + id);
+                        try
+                        {
+                            App.Dic.Resolve<IStudyNotifier>().StartNotify();
+                        }
+                        catch { }
+                    }
+                    catch { }
+                });
+            }
         }
 
-        private string _email;
-
-        public string Email
+        public override void OnNavigatedTo(NavigationParameters parameters)
         {
-            get { return _email; }
-            set { SetProperty(ref _email, value); }
+            base.OnNavigatedTo(parameters);
+            try
+            {
+                App.Dic.Resolve<IStudyNotifier>().StopNotify();
+            }
+            catch { }
         }
-
 
         public StartPageViewModel(INavigationService navigationService)
             : base(navigationService)
         {
             Title = "StartPage";
-            Email = "";
             GeneralCommand = new DelegateCommand(ExecuteGeneralCommand);
             LoginCommand = new DelegateCommand(ExecuteLoginCommand);
         }

@@ -10,6 +10,15 @@ namespace StudyApp.ViewModels
     public class MenuPageViewModel : ViewModelBase
     {
 
+        public DelegateCommand SignOutCommand { get; }
+        private async void ExecuteSignOutCommand()
+        {
+            App.UserId = "0";
+            UserName = Localization.LocalizationResources.GeneralUser;
+            await NavigationService.NavigateAsync("/StartPage");
+        }
+
+
         private string _userName;
         public string UserName
         {
@@ -151,7 +160,7 @@ namespace StudyApp.ViewModels
             Title = Localization.LocalizationResources.ResourceManager.GetString("HomePage");
             _currentDetailPage = "Dashboard";
 
-            UserName = "General User";
+            UserName = Localization.LocalizationResources.GeneralUser;
 
             ExamsColor = "Black";
             ClassesColor = "Black";
@@ -166,6 +175,7 @@ namespace StudyApp.ViewModels
             DashboardIconSource = "Images/icon_dashboard_blue.png";
 
             NavigateCommand = new DelegateCommand<string>(ExecuteNavigateCommand);
+            SignOutCommand = new DelegateCommand(ExecuteSignOutCommand);
         }
 
     }

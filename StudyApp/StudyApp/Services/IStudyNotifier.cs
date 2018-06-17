@@ -9,6 +9,8 @@ namespace StudyApp.Services
 {
     public abstract class IStudyNotifier
     {
+        public abstract Task StartNotify();
+        public abstract Task StopNotify();
         public abstract void StudyNotify(string title, string text, object context = null);
 
         public async Task CheckNotification(object context = null)

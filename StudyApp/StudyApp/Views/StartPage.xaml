@@ -5,15 +5,31 @@
              xmlns:i18n="clr-namespace:StudyApp.Localization;assembly=StudyApp"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="StudyApp.Views.StartPage">
-    <StackLayout Padding="0, 20, 0, 0">
-        <Image
-            Source="Images/icon_main.png"
-            HorizontalOptions="Center"
-            VerticalOptions="Center"
+    <StackLayout VerticalOptions="Fill" HorizontalOptions="Fill">
+        <Grid VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <Image
+                Grid.Column="0"
+                Grid.Row="0"
+                Source="Images/icon_main.png"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
             />
-        <Button Text="{i18n:Translate LoginFacebook}" BackgroundColor="Blue" Command="{Binding LoginCommand}" />
-        <Button Text="{i18n:Translate ContinueGeneral}" Command="{Binding GeneralCommand}" />
-
-        <Label Text="{Binding Email}" />
+            <Button Text="{i18n:Translate LoginFacebook}" BackgroundColor="#3b5998" TextColor="White" Command="{Binding LoginCommand}" 
+                    WidthRequest="300" HorizontalOptions="Center"
+                    Grid.Column="0"
+                    Grid.Row="1"/>
+            <Button Text="{i18n:Translate ContinueGeneral}" Command="{Binding GeneralCommand}"
+                    WidthRequest="300"
+                    Grid.Column="0"
+                    Grid.Row="2"/>
+        </Grid>
     </StackLayout>
 </ContentPage>

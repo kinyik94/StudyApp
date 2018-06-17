@@ -23,10 +23,7 @@ namespace StudyApp.Droid
             Container c = StudyApp.App.Dic;
             c.Register<IStudyNotifier, AndroidStudyNotifier>(Reuse.Singleton);
             c.Register<IFacebookAuthenticator, AndroidFacebookAuthenticator>(Reuse.Singleton);
-
-            Intent intent = new Intent("StartStudyService");
-            SendBroadcast(intent);
-
+            
             global::Xamarin.Forms.Forms.Init(this, bundle);
             LoadApplication(new App(new AndroidInitializer()));
         }

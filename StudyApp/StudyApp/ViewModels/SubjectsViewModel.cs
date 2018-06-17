@@ -28,7 +28,9 @@ namespace StudyApp.ViewModels
         private async void ExecuteMenuCommand(string action)
         {
             string ID = "";
-            if (action == Localization.LocalizationResources.EditSemester)
+            if (Semesters == null && Semesters.Count == 0)
+                return;
+            if (Semesters != null && Semesters.Count > 0 && action == Localization.LocalizationResources.EditSemester)
                 ID = "&ID=" + Semesters[SelectedSemesterIndex].ID;
             await NavigationService.NavigateAsync("NewSemester?Action=" + action + ID);
         }

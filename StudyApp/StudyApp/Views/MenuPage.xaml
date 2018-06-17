@@ -81,6 +81,11 @@
                     <Image Source="{Binding ExamsIconSource}" Grid.Column="0" Grid.Row="0" WidthRequest="40" HeightRequest="40" />
                     <Label Text="{i18n:Translate Exams}" Grid.Column="1" Grid.Row="0" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" FontSize="Large" Margin="20, 0, 0, 0" TextColor="{Binding ExamsColor}" />
                 </Grid>
+                <Label Text="{i18n:Translate SignOut}" VerticalOptions="EndAndExpand" HorizontalOptions="Start">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SignOutCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
             </StackLayout>
         </ContentPage>
     </MasterDetailPage.Master>
